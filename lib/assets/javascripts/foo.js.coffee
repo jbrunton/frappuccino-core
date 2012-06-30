@@ -1,2 +1,4 @@
-window.Foo = class
-    foo: "foo"
+namespace "core", ->
+
+    class @Foo
+        foo: "foo"

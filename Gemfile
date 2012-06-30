@@ -13,5 +13,6 @@ group :development, :test do
 
   gem 'jasminerice'
   gem 'jquery-rails'
+  gem 'underscore-rails'
   gem 'guard-jasmine'
 end

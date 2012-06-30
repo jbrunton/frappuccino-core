@@ -2,4 +2,4 @@ describe "Foo", ->
 
     it "has a foo", ->
     
-        expect(new Foo().foo).toBe("foo")
+        expect(new core.Foo().foo).toBe("foo")
