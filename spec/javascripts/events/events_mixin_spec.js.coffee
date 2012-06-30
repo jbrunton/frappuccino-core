@@ -1,4 +1,4 @@
-describe "core.EventsObject", ->
+describe "core.EventsMixin", ->
 
     class Foo extends core.Mixable
         @include core.EventsMixin
