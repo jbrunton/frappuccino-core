@@ -20,7 +20,7 @@ namespace "core", ->
                 
                 container
             
-            registerModules: (container) ->
+            register_modules: (container) ->
                 
                 module_regex = /.*Module/
                 for name, klass of app.modules when module_regex.test( name )
