@@ -5,6 +5,7 @@ namespace "core", ->
     
         @dependency mediator: "Mediator"
         @dependency renderer: "Renderer"
+        @dependency application: "Application"
         
         constructor: (@module) ->
         
@@ -21,3 +22,6 @@ namespace "core", ->
 
                 fullEventName = "#{scope}.#{event}"
                 @mediator.subscribe fullEventName, handler, obj
+
+        resolve_module: ( module_name ) ->
+            @application.modules[module_name]

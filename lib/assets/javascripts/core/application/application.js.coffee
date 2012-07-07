@@ -7,6 +7,7 @@ namespace "core", ->
     @dependency router: "Router"
     
     helpers: {}
+    modules: {}
         
     register_route: ( url, route_name, controller ) ->
         @router.route url, name, ->
@@ -16,6 +17,7 @@ namespace "core", ->
             controller[route_name].apply(controller, arguments)
         
     register_module: (module) ->
+        @modules[module.name] = module
         module.sandbox.bind module
         
     register_controller: (controller) ->
@@ -34,7 +36,7 @@ namespace "core", ->
         helper = @helpers[helper_name]
         if helper?
             _.extend( target, helper )
-                
+            
     run: (bootstrapper_class) ->
         bootstrapper = new bootstrapper_class( @ )
 

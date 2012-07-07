@@ -7,6 +7,7 @@ describe "core.ApplicationModule", ->
         container.register_instance "Mediator", new core.Mediator
         container.register_class "ApplicationModule", core.ApplicationModule
         container.register_class "Sandbox", core.Sandbox
+        container.register_class "Application", {}
         container.register_class "Renderer", {}
         container.register_class "Environment", {}
         container.register_class "Router", {}
