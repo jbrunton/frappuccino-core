@@ -5,6 +5,7 @@ namespace "core", ->
     
     @dependency renderer: "Renderer"
     @dependency router: "Router"
+    @dependency mediator: "Mediator"
     
     helpers: {}
     modules: {}
@@ -30,6 +31,10 @@ namespace "core", ->
             @renderer.register_template name, content
             
     register_helper: ( name, helper ) ->
+        # TODO: would be better to lookup a sandbox here - but need to be able to have distinct,
+        # shared helpers first (where currently they all get included in the "application" helper)
+        @bind_events helper
+
         @helpers[name] = helper
         
     bind_helper: ( helper_name, target ) ->
@@ -37,6 +42,12 @@ namespace "core", ->
         if helper?
             _.extend( target, helper )
             
+    bind_events: (obj) ->
+        regex = /^@((\w+)\.)?(\w+)$/
+
+        for eventName, handler of obj when eventName[0] == "@"
+            @mediator.subscribe eventName[1..], handler, obj
+
     run: (bootstrapper_class) ->
         bootstrapper = new bootstrapper_class( @ )
 
