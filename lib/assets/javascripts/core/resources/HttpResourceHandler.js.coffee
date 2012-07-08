@@ -2,8 +2,9 @@ namespace "core.resources", ->
 
     class @HttpResourceHandler
     
-        resource_url: (collection_name, id, includes) ->        
+        resource_url: (collection_name, id, includes, action) ->        
             base_url = "/api/#{collection_name}/#{id or= ''}"
+            base_url += "/#{action}" unless !action?
             query_params = @gen_req_params( includes )
             
             if query_params
@@ -33,6 +34,21 @@ namespace "core.resources", ->
                 build_params( includes, null )
         
             params
+            
+        get_collection: (collection_name, opts) ->
+            includes = opts?.includes
+            success = opts?.success
+            error = opts?.error
+            action = opts?.action
+            
+            url = @resource_url( collection_name, null, includes, action )
+            
+            $.ajax
+                type: 'GET',
+                url: url,
+                success: success,
+                error: error,
+                dataType: 'json'
     
         get_resource: (collection_name, id, opts) ->
             includes = opts?.includes

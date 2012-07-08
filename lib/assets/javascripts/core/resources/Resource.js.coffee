@@ -32,6 +32,9 @@ namespace "core.resources", ->
                     _.defaults success: success, opts
                     
                 @
+
+            @load_collection: (env, opts) ->
+                env.resourceHandler.get_collection collection_name, opts
             
             save: ( opts ) ->
                 self = @
