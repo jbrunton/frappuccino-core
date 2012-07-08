@@ -41,7 +41,10 @@ namespace "core.resources", ->
             error = opts?.error
             action = opts?.action
             
-            url = @resource_url( collection_name, null, includes, action )
+            if opts.url?
+                url = opts.url
+            else
+                url = @resource_url( collection_name, null, includes, action )
             
             $.ajax
                 type: 'GET',
