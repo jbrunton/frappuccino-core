@@ -4,7 +4,7 @@ namespace "core.resources", ->
     
         resource_url: (collection_name, id, includes, action) ->        
             base_url = "/api/#{collection_name}/#{id or= ''}"
-            base_url += "/#{action}" unless !action?
+            base_url += "#{action}/" unless !action?
             query_params = @gen_req_params( includes )
             
             if query_params

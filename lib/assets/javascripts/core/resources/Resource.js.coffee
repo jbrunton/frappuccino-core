@@ -34,7 +34,13 @@ namespace "core.resources", ->
                 @
 
             @load_collection: (env, opts) ->
-                env.resourceHandler.get_collection collection_name, opts
+                success = (data) ->
+                    collection = _.map data, (el) ->
+                        env.deserialize( type_name, el )
+                    opts?.success?( collection )
+
+                env.resourceHandler.get_collection collection_name,
+                    _.defaults success: success, opts
             
             save: ( opts ) ->
                 self = @
