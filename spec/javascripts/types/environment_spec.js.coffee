@@ -36,17 +36,21 @@ describe "core.types.Environment", ->
         beforeEach ->
             env.defineSimpleType "string"
         
-            env.defineComplexType "FooTy",
-                baz: 'string'
+            env.defineComplexType "foo",
+                attr:
+                    baz: 'string'
+                attr_accessible: [ "baz" ]
             
-            env.defineComplexType "BarTy",
-                bar: 'string'
-                foo: 'FooTy'
+            env.defineComplexType "bar",
+                attr:
+                    bar: 'string'
+                    foo: 'foo'
+                attr_accessible: [ "bar" ]
                 
         describe "serialize", ->
         
             it "serializes arbitrary types", ->
-                data = env.serialize "BarTy",
+                data = env.serialize "bar",
                     bar: -> "bar"
                     foo: ->
                         baz: -> "baz"
@@ -57,7 +61,7 @@ describe "core.types.Environment", ->
         describe "deserialize", ->
         
             it "deserializes arbitrary types", ->
-                obj = env.deserialize "BarTy",
+                obj = env.deserialize "bar",
                     bar: "bar"
                     foo:
                         baz: "baz"

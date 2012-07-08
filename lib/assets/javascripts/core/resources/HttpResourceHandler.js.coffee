@@ -67,7 +67,7 @@ namespace "core.resources", ->
             success = opts?.success
             error = opts?.error
             
-            url = @resource_url( collection_name, data.id )
+            url = @resource_url( collection_name, id )
             
             $.ajax
                 type: 'PUT'

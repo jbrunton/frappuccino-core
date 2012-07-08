@@ -9,8 +9,9 @@ describe "core.types.ListType", ->
 
         env.defineSimpleType "number"
 
-        FooTy = env.defineComplexType "Foo"
-            foos: "List[number]"
+        FooTy = env.defineComplexType "Foo",
+            attr:
+                foos: "List[number]"
 
     it "serializes lists", ->
         obj =

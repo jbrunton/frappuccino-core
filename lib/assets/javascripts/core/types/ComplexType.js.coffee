@@ -15,7 +15,7 @@
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
                 assocName = ":#{propName}"
-                include = propKind == 'simple' || includeSpec[assocName]?
+                include = _.include(tyDef.attr_accessible, propName) || includeSpec[assocName]?
                 
                 if include
                     prop = obj[propName]
@@ -23,7 +23,8 @@
                     
                     data[propName] = propTy.serialize propVal, env, includeSpec[assocName]
             
-            serializeField propName, propTyName for propName, propTyName of tyDef
+            for propName, propTyName of tyDef.attr
+                serializeField propName, propTyName
             
             data
             
@@ -50,6 +51,7 @@
                 
                     target[propName] = prop
             
-            deserializeField propName, propTyName for propName, propTyName of tyDef
+            for propName, propTyName of tyDef.attr
+                deserializeField propName, propTyName 
             
             target
