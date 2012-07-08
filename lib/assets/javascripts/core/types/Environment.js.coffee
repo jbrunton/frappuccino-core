@@ -22,7 +22,7 @@
             ty
             
         defineResource: (tyName, collName, tyDef) ->
-            @defineComplexType tyName, tyDef, core.resources.Resource(tyName, collName, @)
+            @defineComplexType tyName, tyDef, core.resources.Resource(tyName, collName)
             
         getType: (tyName) ->
             match = /^List\[(.*)\]$/.exec tyName
@@ -45,7 +45,7 @@
         create: (tyName, opts...) ->
             tyClass = @_classes[tyName]
             if tyClass?
-                new tyClass opts
+                new tyClass @, opts
             else
                 {}
         

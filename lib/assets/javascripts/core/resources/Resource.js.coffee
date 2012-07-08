@@ -1,25 +1,26 @@
 namespace "core.resources", ->
 
-    @Resource = (type_name, collection_name, env) ->
+    @Resource = (type_name, collection_name) ->
         class
         
             type_name: type_name
             
             collection_name: collection_name
             
-            constructor: (data) ->
+            constructor: (@env, data) ->
                 @deserialize(data || {})
                 
             serialize: ->
-                env.serialize type_name, @
+                @env.serialize type_name, @
                 
             deserialize: (data) ->
-                env.deserialize type_name, data, @
+                @env.deserialize type_name, data, @
             
             load: (id, opts) ->
                 # env.resourceHandler.get_resource( collName, id, success: success )
                 
                 self = @
+                env = @env
                 
                 @id(id)
                 
@@ -34,6 +35,7 @@ namespace "core.resources", ->
             
             save: ( opts ) ->
                 self = @
+                env = @env
                 opts ?= {}
                 
                 success = (data) ->
