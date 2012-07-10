@@ -2,22 +2,45 @@ describe "core.Sandbox", ->
 
     container = null
 
-    beforeEach ->
-        container = new core.Container
-        container.register_instance "Mediator", new core.Mediator
-        container.register_class "ApplicationModule", core.ApplicationModule
-        container.register_class "Sandbox", core.Sandbox
-        container.register_instance "Application", new core.Application
-        container.register_class "Renderer", {}
-        container.register_class "Environment", {}
-        container.register_class "Router", {}
-        
-    it "should resolve modules", ->
-        test_module = container.resolve "ApplicationModule", "test_module"
-        app = container.resolve "Application"
-        app.register_module test_module
+    class Renderer
+    app = {}
 
-        sandbox = container.resolve "Sandbox"
+    beforeEach ->
+        container = ( new core.Container )
+            .register_class( "Sandbox", core.Sandbox )
+            .register_instance( "Application", app )
+            .register_class( "Renderer", Renderer )
+
+    describe "dependencies", ->
+    
+        mediator = {}
         
-        expect(sandbox.resolve_module "test_module").toBe test_module
+        beforeEach ->
+            container.register_instance( "Mediator", mediator )
         
+        it "should have an instance of the Application", ->
+            sandbox = container.resolve "Sandbox"
+            expect( sandbox.application ).toBe app
+            
+        it "should have an instance of a Mediator", ->
+            sandbox = container.resolve "Sandbox"
+            expect( sandbox.mediator ).toBe mediator
+            
+        it "should have a Renderer", ->
+            sandbox = container.resolve "Sandbox"
+            expect( sandbox.renderer instanceof Renderer ).toBeTruthy()
+        
+    describe "has a publish method", ->
+        
+        mediator = null
+        
+        beforeEach ->
+            mediator = publish: ->    
+            container.register_instance( "Mediator", mediator )
+            spyOn( mediator, "publish" )
+
+        it "publishes events", ->
+            sandbox = container.resolve "Sandbox"
+            sandbox.publish( "anEvent", "some_argument" )
+            
+            expect( mediator.publish ).toHaveBeenCalledWith( "anEvent", "some_argument" )        

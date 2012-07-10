@@ -1,49 +1,53 @@
 describe "core.Container", ->
 
-    container   = null
+    container = null
 
-    class Foo
-        constructor: ->
-    
-    class Bar extends core.Mixable
-            @include core.DependentMixin
-    
-            constructor: ->
-        
-            @dependency foo: "foo"
-            @dependency bar: -> ["foo"]
-        
     beforeEach ->
         container = new core.Container
     
-    it "should resolve registered instances", ->
-        foo = new Foo
-        container.register_instance "foo", foo
+    it "resolves registered instances", ->
+        my_object = new Object
+        container.register_instance "object", my_object
         
-        expect(container.resolve "foo").toBe foo
+        expect( container.resolve "object" ).toBe my_object
         
-    it "should resolve registered types", ->
-        container.register_class "Foo", Foo
+    it "resolves registered classes", ->
+        class MyClass
+        container.register_class "MyClass", MyClass
         
-        expect(container.resolve_class "Foo").toBe Foo
-        expect(container.resolve("Foo") instanceof Foo).toBeTruthy()
+        expect( container.resolve( "MyClass" ) instanceof MyClass ).toBeTruthy()
         
-    it "should resolve dependencies defined by type", ->
-        foo = new Object
+    it "resolves classes registered as singletons to the same instance", ->
+        class MyClass
+        container.register_class "MyClass", MyClass, singleton: true
         
-        container.register_instance "foo", foo
-        container.register_class "Bar", Bar
+        expect( container.resolve "MyClass" ).toBe( container.resolve "MyClass" )        
         
-        bar = container.resolve "Bar"
+    it "resolves nested dependencies", ->
+        class MyClass extends core.Mixable
+            @include core.DependentMixin
+            @dependency object: "object"
+            
+        my_object = new Object
+
+        container.register_instance "object", my_object
+        container.register_class "MyClass", MyClass
         
-        expect(bar.foo).toBe foo
+        my_instance = container.resolve "MyClass"
         
+        expect( my_instance instanceof MyClass ).toBeTruthy()
+        expect( my_instance.object ).toBe my_object
+
     it "should resolve dependencies defined by deferred functions", ->
-        foo = new Object
+        class MyClass extends core.Mixable
+            @include core.DependentMixin
+            @dependency object: -> my_object
+            
+        my_object = new Object
         
-        container.register_instance "foo", foo
-        container.register_class "Bar", Bar
+        container.register_instance "object", my_object
+        container.register_class "MyClass", MyClass
         
-        bar = container.resolve "Bar"
+        my_instance = container.resolve "MyClass"
         
-        expect(bar.foo).toBe foo
+        expect( my_instance.object ).toBe my_object
