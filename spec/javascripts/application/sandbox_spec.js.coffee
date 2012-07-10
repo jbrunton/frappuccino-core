@@ -30,17 +30,30 @@ describe "core.Sandbox", ->
             sandbox = container.resolve "Sandbox"
             expect( sandbox.renderer instanceof Renderer ).toBeTruthy()
         
-    describe "has a publish method", ->
+    describe "events", ->
         
         mediator = null
+        sandbox = null
         
         beforeEach ->
-            mediator = publish: ->    
+            mediator = jasmine.createSpyObj( "mediator", [ "publish", "subscribe" ] )
             container.register_instance( "Mediator", mediator )
-            spyOn( mediator, "publish" )
 
-        it "publishes events", ->
+        it "publishes events via the application Mediator", ->
             sandbox = container.resolve "Sandbox"
-            sandbox.publish( "anEvent", "some_argument" )
+            sandbox.publish( "MyModule.event" )
             
-            expect( mediator.publish ).toHaveBeenCalledWith( "anEvent", "some_argument" )        
+            expect( mediator.publish ).toHaveBeenCalledWith( "MyModule.event" )
+            
+        it "publishes events with arguments", ->
+            sandbox = container.resolve "Sandbox"
+            sandbox.publish( "MyModule.event", 1, 2, 3 )
+            
+            expect( mediator.publish ).toHaveBeenCalledWith( "MyModule.event", 1, 2, 3 )
+
+        it "implicitly scopes published events according to the name of the sandbox module", ->
+            my_module = name: "MyModule"
+            sandbox = container.resolve "Sandbox", my_module
+            sandbox.publish( "event" )
+            
+            expect( mediator.publish ).toHaveBeenCalledWith( "MyModule.event" )

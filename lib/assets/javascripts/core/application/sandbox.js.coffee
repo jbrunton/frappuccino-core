@@ -10,7 +10,12 @@ namespace "core", ->
         constructor: (@module) ->
         
         publish: (eventName, args...) ->
-            @mediator.publish(eventName, args...)
+            match = /^((\w+)\.)?(\w+)$/.exec eventName
+            scope = match[2] ?= @module.name
+            event = match[3]
+            fullEventName = "#{scope}.#{event}"
+
+            @mediator.publish(fullEventName, args...)
             
         bind: (obj) ->
             regex = /^@((\w+)\.)?(\w+)$/
