@@ -20,21 +20,18 @@ describe "core.ApplicationModule", ->
         expect( app_module.name ).toBe "MyModule"
         
     describe "dependencies", ->
+        app_module = container.resolve "ApplicationModule"        
     
         it "should have a Sandbox", ->
-            app_module = container.resolve "ApplicationModule"        
             expect( app_module.sandbox instanceof Sandbox ).toBeTruthy()
     
         it "should have an Environment", ->
-            app_module = container.resolve "ApplicationModule"        
             expect( app_module.env instanceof Environment ).toBeTruthy()
             
         it "should have a Renderer", ->
-            app_module = container.resolve "ApplicationModule"
             expect( app_module.renderer instanceof Renderer ).toBeTruthy()
             
         it "should have a Router", ->
-            app_module = container.resolve "ApplicationModule"        
             expect( app_module.router instanceof Router ).toBeTruthy()
         
     it "should create a child container with its own sandbox instance registered", ->
