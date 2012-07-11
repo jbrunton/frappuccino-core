@@ -15,6 +15,12 @@ namespace "core", ->
         @dependency renderer: "Renderer"
         @dependency router: "Router"
         
+        publish: ->
+            @sandbox.publish.apply( sandbox, arguments )
+            
+        bind_subscriptions: ->
+            @sandbox.bind_subscriptions.apply( sandbox, arguments )
+        
     #class @ModuleCatalog
     
     #    constructor: ->

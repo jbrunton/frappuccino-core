@@ -27,8 +27,8 @@ namespace "core", ->
             scoped_name = @scoped_name( event, validate: true )
             @mediator.publish( scoped_name, args... )
             
-        bind: (obj) ->
-            for event, handler of obj when event.match( regex )
+        bind_subscriptions: (obj) ->
+            for event, handler of obj
                 scoped_name = @scoped_name( event, match_subscriptions: true )                
                 if scoped_name?
                     @mediator.subscribe( scoped_name, handler, obj )
