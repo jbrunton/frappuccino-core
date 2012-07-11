@@ -57,3 +57,7 @@ describe "core.Sandbox", ->
             sandbox.publish( "event" )
             
             expect( mediator.publish ).toHaveBeenCalledWith( "MyModule.event" )
+
+        it "errors if asked to publish an invalid event name", ->
+            sandbox = container.resolve "Sandbox"
+            expect(-> sandbox.publish( "not.an.event" )).toThrow()

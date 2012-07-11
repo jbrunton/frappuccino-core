@@ -9,24 +9,29 @@ namespace "core", ->
         
         constructor: (@module) ->
         
-        publish: (eventName, args...) ->
-            match = /^((\w+)\.)?(\w+)$/.exec eventName
-            scope = match[2] ?= @module.name
-            event = match[3]
-            fullEventName = "#{scope}.#{event}"
-
-            @mediator.publish(fullEventName, args...)
+        scoped_name: ( input, opts ) ->
+            if opts?.match_subscriptions?
+                regex = /^@((\w+)\.)?(\w+)$/
+            else
+                regex = /^((\w+)\.)?(\w+)$/
+            
+            [_, _, scope, event] = regex.exec( input )
+            
+            if event?
+                scope ?= @module.name
+                "#{scope}.#{event}"
+            else if opts?.validate?
+                throw new Error( "Invalid event name: #{input}" )
+        
+        publish: (event, args...) ->
+            scoped_name = @scoped_name( event, validate: true )
+            @mediator.publish( scoped_name, args... )
             
         bind: (obj) ->
-            regex = /^@((\w+)\.)?(\w+)$/
-
-            for eventName, handler of obj when eventName[0] == "@"
-                match = regex.exec eventName
-                scope = match[2] ?= @module.name
-                event = match[3]
-
-                fullEventName = "#{scope}.#{event}"
-                @mediator.subscribe fullEventName, handler, obj
+            for event, handler of obj when event.match( regex )
+                scoped_name = @scoped_name( event, match_subscriptions: true )                
+                if scoped_name?
+                    @mediator.subscribe( scoped_name, handler, obj )
 
         resolve_module: ( module_name ) ->
             @application.modules[module_name]
