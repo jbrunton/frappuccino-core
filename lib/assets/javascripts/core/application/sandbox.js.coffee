@@ -14,10 +14,9 @@ namespace "core", ->
                 regex = /^@((\w+)\.)?(\w+)$/
             else
                 regex = /^((\w+)\.)?(\w+)$/
-            
-            [_, _, scope, event] = regex.exec( input )
-            
-            if event?
+                
+            if input.match( regex )
+                [_, _, scope, event] = regex.exec( input )            
                 scope ?= @module.name
                 "#{scope}.#{event}"
             else if opts?.validate?

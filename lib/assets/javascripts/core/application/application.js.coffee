@@ -19,7 +19,7 @@ namespace "core", ->
         
     register_module: (module) ->
         @modules[module.name] = module
-        module.sandbox.bind module
+        module.sandbox.bind_subscriptions module
         
     register_controller: (controller) ->
         @register_module controller
