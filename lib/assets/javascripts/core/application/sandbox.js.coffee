@@ -7,7 +7,7 @@ namespace "core", ->
         @dependency renderer: "Renderer"
         @dependency application: "Application"
         
-        constructor: (@module) ->
+        constructor: ( @module ) ->
         
         scoped_name: ( input, opts ) ->
             if opts?.match_subscriptions?

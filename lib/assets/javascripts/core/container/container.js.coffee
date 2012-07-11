@@ -14,7 +14,7 @@ namespace "core", ->
                 if typeof dependency == "function"
                     target[name] = dependency.apply(target, [@])
                 else
-                    target[name] = @resolve dependency, optsFn?.apply(target)
+                    target[name] = @resolve dependency, optsFn?.apply(target, [@])
         
         register_class: (name, klass, opts = {}) ->
             @_register_mapping name, klass, "class", opts
@@ -35,6 +35,9 @@ namespace "core", ->
         resolve: (ref, opts) ->
             if typeof ref == "string"
                 mapping = @_mappings[ref]
+                
+                if !mapping
+                    return null
                 
                 if mapping.kind == "instance"
                     mapping.ref
