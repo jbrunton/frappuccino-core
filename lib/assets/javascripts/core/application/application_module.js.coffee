@@ -21,8 +21,8 @@ namespace "core", ->
         bind_subscriptions: ->
             @sandbox.bind_subscriptions.apply( sandbox, arguments )
             
-        create_model: ( class_name ) ->
-            @env.create( class_name )
+        create_model: ( class_name, opts ) ->
+            @env.create( class_name, opts )
         
     #class @ModuleCatalog
     
