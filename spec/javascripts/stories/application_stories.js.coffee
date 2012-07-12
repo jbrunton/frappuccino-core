@@ -9,44 +9,51 @@ feature "Application Bootstrapper", ->
 
     scenario "Run an application with a bootstrapper", ->
     
-        app = null
+        app = bootstrapper = null
 
-        Given "I have an application", ->
+        Given "I have an application and a bootstrapper", ->
             app = new core.Application
+            bootstrapper = test_helper.Bootstrapper()
     
-        When "I run the application with a bootstrapper", ->
-            app.run( test_helper.Bootstrapper() )
+        When "I run the application with the bootstrapper", ->
+            spyOn( bootstrapper, 'configure_container' ).andCallThrough()
+            app.run( bootstrapper )
     
-        Then "the application should be running", ->
+        Then "the container should have been configured", ->
+            expect( bootstrapper.configure_container ).toHaveBeenCalled()
+    
+        And "the application should be running", ->
             (expect app.running).toBe true
             
         # TODO: test for Application.initialize and Application.ready events
         
-    scenario "core.Bootstrapper initializes the environment with the application models", ->
+    scenario "initialize the environment with the application models", ->
     
-        app = MyModel = null
+        app = bootstrapper = MyModel = null
         
-        Given "I have an application", ->
+        Given "I have an application and a bootstrapper", ->
             app = new core.Application
+            bootstrapper = test_helper.Bootstrapper()
         
-        When "I configure and run the application", ->
+        When "I configure and run the application with the bootstrapper", ->
             MyModel = class extends core.Model
             app.config "app.models",
                 MyModel: MyModel
-            app.run( test_helper.Bootstrapper() )
+            app.run( bootstrapper )
             
         Then "the application environment should be configured with the application models", ->
             my_model = app.env.create( "my_model" )
             expect( my_model instanceof MyModel ).toBe true
             
-    scenario "core.Bootstrapper initializes the application modules", ->
+    scenario "initialize the application modules", ->
 
-        app = MyModule = null
+        app = bootstrapper = MyModule = null
         
-        Given "I have an application", ->
+        Given "I have an application and a bootstrapper", ->
             app = new core.Application
+            bootstrapper = test_helper.Bootstrapper()
         
-        When "I configure and run the application", ->
+        When "I configure and run the application with the boostrapper", ->
             MyModule = class extends core.ApplicationModule
                 publish_event: -> @sandbox.publish "event"
                 @on "event", -> @event_handler()                    
@@ -54,7 +61,7 @@ feature "Application Bootstrapper", ->
             
             app.config "app.modules",
                 MyModule: MyModule
-            app.run( test_helper.Bootstrapper() )
+            app.run( bootstrapper )
             
         Then "the application should instantiate the application modules", ->
             my_module = app.resolve_module( "MyModule" )

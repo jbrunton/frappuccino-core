@@ -2,11 +2,11 @@ namespace "test_helper", ->
 
     @Bootstrapper = ->
     
-        class extends core.Bootstrapper
+        class Bootstrapper extends core.Bootstrapper
         
             # TODO: remove app param, and register Renderer as a singleton type
-            configure_container: ->
-                container = super()
+            configure_container: ( application ) ->
+                container = super( application )
                 
                 # container.registerClass "Application", app.Application, singleton: true
                 container.register_class "Renderer", {}, singleton: true
@@ -21,3 +21,5 @@ namespace "test_helper", ->
                 env.defineSimpleType "string"
                                                 
                 container
+                
+        new Bootstrapper

@@ -73,10 +73,8 @@ namespace "core", ->
         for eventName, handler of obj when eventName[0] == "@"
             @mediator.subscribe eventName[1..], handler, obj
 
-    run: (bootstrapper_class) ->
-        bootstrapper = new bootstrapper_class( @ )
-
-        container = bootstrapper.configure_container()
+    run: (bootstrapper) ->
+        container = bootstrapper.configure_container( @ )
         container.resolve( @ )
 
         bootstrapper.register_modules( container )   

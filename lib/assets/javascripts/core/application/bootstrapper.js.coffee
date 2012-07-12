@@ -2,9 +2,8 @@ namespace "core", ->
 
         class @Bootstrapper
         
-            constructor: (@application) ->
-    
-            configure_container: ->
+            configure_container: ( application ) ->
+                @application = application
                 container = new core.Container()
                 
                 # TODO: do we need these?
