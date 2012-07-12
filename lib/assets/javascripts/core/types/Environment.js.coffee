@@ -26,9 +26,6 @@
                 model_class.ty_def(),
                 model_class
         
-        defineResource: (tyName, collName, tyDef) ->
-            @defineComplexType tyName, tyDef, core.resources.Resource(tyName, collName)
-            
         getType: (tyName) ->
             match = /^List\[(.*)\]$/.exec tyName
             if match?
