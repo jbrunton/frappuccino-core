@@ -33,4 +33,4 @@ namespace "core", ->
                     @mediator.subscribe( scoped_name, handler, obj )
 
         resolve_module: ( module_name ) ->
-            @application.modules[module_name]
+            @application.resolve_module( module_name )

@@ -1,2 +1,2 @@
 #=require core
-#=require_tree ./
+#=require_tree ./spec
