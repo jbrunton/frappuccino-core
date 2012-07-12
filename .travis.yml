@@ -6,3 +6,4 @@ before-script:
   - bundle exec rackup -p 3000
 script:
   - bundle exec guard-jasmine
+  - bundle exec guard-jasmine -u http://localhost:3000/jasmine-stories
