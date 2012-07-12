@@ -4,11 +4,11 @@
         @include core.DependentMixin
     
         @dependency propertyFactory: "PropertyFactory"
+        @dependency repository: "ModelRepository"
         
         constructor: ->
             @_types = {}
             @_classes = {}
-            @resourceHandler = new core.resources.HttpResourceHandler
         
         defineSimpleType: (tyName, serialize, deserialize) ->
             ty = new core.types.SimpleType tyName, serialize, deserialize

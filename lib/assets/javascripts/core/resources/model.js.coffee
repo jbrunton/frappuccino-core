@@ -38,7 +38,7 @@ namespace "core", ->
                 env.deserialize( class_name, data, self )
                 opts?.success?( self )
             
-            env.resourceHandler.get_resource collection_name, id,
+            env.repository.get_resource collection_name, id,
                 _.defaults success: success, opts
                 
             @
@@ -51,7 +51,7 @@ namespace "core", ->
                     env.deserialize( class_name, el )
                 opts?.success?( collection )
 
-            env.resourceHandler.get_collection collection_name,
+            env.repository.get_collection collection_name,
                 _.defaults success: success, opts
         
         save: ( opts ) ->
@@ -65,12 +65,12 @@ namespace "core", ->
                 opts?.success?( self )
                 
             if @id()
-                env.resourceHandler.update_resource collection_name,
+                env.repository.update_resource collection_name,
                     @id(),
                     @serialize(),
                     _.defaults success: success, opts
             else
-                env.resourceHandler.create_resource collection_name,
+                env.repository.create_resource collection_name,
                     @serialize(),
                     _.defaults success: success, opts
                     

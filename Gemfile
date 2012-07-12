@@ -15,4 +15,5 @@ group :development, :test do
   gem 'jquery-rails'
   gem 'underscore-rails'
   gem 'guard-jasmine'
+  gem 'jasmine-stories'
 end

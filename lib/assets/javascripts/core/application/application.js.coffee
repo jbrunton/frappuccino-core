@@ -10,6 +10,8 @@ namespace "core", ->
     
     helpers: {}
     modules: {}
+    
+    running: false
         
     register_route: ( url, route_name, controller ) ->
         @router.route url, name, ->
@@ -66,6 +68,8 @@ namespace "core", ->
         
         @mediator.publish "Application.initialize"
         @mediator.publish "Application.ready"
+        
+        @running = true
         
         bootstrapper
         

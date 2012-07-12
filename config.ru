@@ -1,6 +1,7 @@
 require 'rails'
 require 'rails/all'
 require 'jasminerice'
+require 'jasmine-stories'
 require 'sprockets/railtie'
 require 'jquery-rails'
 
