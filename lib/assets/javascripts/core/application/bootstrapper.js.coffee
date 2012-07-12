@@ -15,7 +15,7 @@ namespace "core", ->
                 container.register_class "Mediator", core.Mediator, singleton: true
                 container.register_class "Environment", core.types.Environment, singleton: true
                 
-                # TODO: yurk!
+                # TODO: yurk!  should resolve( @application ) instead, maybe?
                 @application.mediator = container.resolve "Mediator"
                 
                 container
@@ -40,3 +40,12 @@ namespace "core", ->
                     helper_name = _.string.underscored( matches[1] )
                     helper = container.resolve( new klass() )
                     @application.register_helper( helper_name, helper )
+                    
+            register_models: ->
+            
+                is_model = ( model_class ) ->
+                    model_class.prototype.constructor.__super__?.constructor == core.Model
+           
+                for model_name, model_class of app.models when is_model( model_class )
+                    model_name = _.string.underscored( model_name )
+                    @application.register_model( model_name, model_class )

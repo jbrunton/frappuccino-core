@@ -6,6 +6,7 @@ namespace "core", ->
     @dependency renderer: "Renderer"
     @dependency router: "Router"
     @dependency mediator: "Mediator"
+    @dependency env: "Environment"
     
     helpers: {}
     modules: {}
@@ -37,6 +38,11 @@ namespace "core", ->
 
         @helpers[name] = helper
         
+    register_model: ( model_name, model_class ) ->
+        model_class::class_name = model_name
+        model_class::collection_name = "#{model_name}s"
+        @env.register_model model_class
+        
     bind_helper: ( helper_name, target ) ->
         helper = @helpers[helper_name]
         if helper?
@@ -56,6 +62,7 @@ namespace "core", ->
 
         bootstrapper.register_modules( container )   
         bootstrapper.register_helpers( container )
+        bootstrapper.register_models()
         
         @mediator.publish "Application.initialize"
         @mediator.publish "Application.ready"

@@ -20,7 +20,12 @@
             @_types[tyName] = ty
             @_classes[tyName] = tyClass
             ty
-            
+        
+        register_model: ( model_class ) ->
+            @defineComplexType model_class::class_name,
+                model_class.ty_def(),
+                model_class
+        
         defineResource: (tyName, collName, tyDef) ->
             @defineComplexType tyName, tyDef, core.resources.Resource(tyName, collName)
             
