@@ -19,10 +19,7 @@ feature "Application Bootstrapper", ->
             spyOn( bootstrapper, 'configure_container' ).andCallThrough()
             app.run( bootstrapper )
     
-        Then "the container should have been configured", ->
-            expect( bootstrapper.configure_container ).toHaveBeenCalled()
-    
-        And "the application should be running", ->
+        Then "the application should be running", ->
             (expect app.running).toBe true
             
         # TODO: test for Application.initialize and Application.ready events
