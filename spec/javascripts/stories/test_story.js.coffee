@@ -54,7 +54,7 @@ feature "Application Bootstrapper", ->
             #    evaluate: /\{\[(.+?)\]\}/g
                 
     class MyApplication extends core.Application
-
+    
         run: ( bootstrapper_class ) ->
             bootstrapper = super( bootstrapper_class )
             bootstrapper.initialize()
@@ -83,16 +83,16 @@ feature "Application Bootstrapper", ->
     
         my_app = null
         
-        window.app =
-            models:
-                MyModel: class extends core.Model
+        MyModel = class extends core.Model
         
         Given "I have an application and bootstrapper", ->
             my_app = new MyApplication
+            my_app.config "app.models",
+                MyModel: MyModel
         
         When "I run the application", ->
             my_app.run( MyBootstrapper )
             
-        Then "the application environment should be configured with models in the app.models namespace", ->
+        Then "the application environment should be configured with the models specified by the 'app.models' config key", ->
             my_model = my_app.env.create( "my_model" )
-            expect( my_model instanceof app.models.MyModel ).toBe true
+            expect( my_model instanceof MyModel ).toBe true

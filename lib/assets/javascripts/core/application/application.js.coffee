@@ -12,6 +12,20 @@ namespace "core", ->
     modules: {}
     
     running: false
+    
+    constructor: ->
+        @configure()
+        
+    _config: {}
+        
+    config: ( key, value ) ->
+        if value?
+            @_config[key] = value
+        else
+            @_config[key]
+        
+    configure: ->
+        @config "app.models", app?.models
         
     register_route: ( url, route_name, controller ) ->
         @router.route url, name, ->

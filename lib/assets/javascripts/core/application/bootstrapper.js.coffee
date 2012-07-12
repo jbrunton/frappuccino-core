@@ -45,7 +45,10 @@ namespace "core", ->
             
                 is_model = ( model_class ) ->
                     model_class.prototype.constructor.__super__?.constructor == core.Model
+                    
+                app_models = @application.config "app.models"
+                app_models ?= app?.models
            
-                for model_name, model_class of app?.models when is_model( model_class )
+                for model_name, model_class of app_models when is_model( model_class )
                     model_name = _.string.underscored( model_name )
                     @application.register_model( model_name, model_class )
