@@ -2,13 +2,12 @@ namespace "core", ->
 
     class @Model
     
-        @_attr_accessible: []
-        @_attr = {}
-    
         @attr_accessible: ->
+            @_attr_accessible ?= []
             @_attr_accessible = @_attr_accessible.concat( _.toArray( arguments ) )
             
         @attr: ( attr ) ->
+            @_attr ?= {}
             @_attr = _.defaults( @_attr, attr )
             
         @ty_def: ->
