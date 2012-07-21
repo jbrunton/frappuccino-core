@@ -13,6 +13,9 @@ namespace "core", ->
     
     resolve_module: ( module_name ) ->
         @modules[ module_name ]
+        
+    resolve_helper: ( helper_name ) ->
+        @helpers[ helper_name ]
     
     running: false
     

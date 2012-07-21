@@ -34,3 +34,6 @@ namespace "core", ->
 
         resolve_module: ( module_name ) ->
             @application.resolve_module( module_name )
+            
+        resolve_helper: ( helper_name ) ->
+            @application.resolve_helper( helper_name )
