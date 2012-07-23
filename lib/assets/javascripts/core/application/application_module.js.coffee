@@ -18,8 +18,9 @@ namespace "core", ->
         publish: ->
             @sandbox.publish.apply( sandbox, arguments )
             
-        bind_subscriptions: ->
-            @sandbox.bind_subscriptions.apply( sandbox, arguments )
+        bind_subscriptions: (target) ->
+            @sandbox.bind_subscriptions.apply( @sandbox, [target] )
+            target.publish = @sandbox.publish
             
         create_model: ( class_name, opts ) ->
             @env.create( class_name, opts )

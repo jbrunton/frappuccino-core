@@ -24,9 +24,10 @@ namespace "core", ->
                 app_modules = @application.config "app.modules"
                 app_modules ?= app?.modules
                 
-                module_regex = /.*Module/
-                for name, klass of app_modules when module_regex.test( name )
-                    module = container.resolve( new klass( name ) )
+                module_regex = /(.*)Module/
+                for klass_name, klass of app_modules when matches = module_regex.exec( klass_name )
+                    module_name = _.string.underscored( matches[1] )
+                    module = container.resolve( new klass( module_name ) )
                     @application.register_module( module )
                 
                 app_controllers = @application.config "app.controllers"

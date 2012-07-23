@@ -51,7 +51,7 @@
         create: (tyName, opts...) ->
             tyClass = @_classes[tyName]
             if tyClass?
-                new tyClass @, opts
+                new tyClass @, opts...
             else
                 {}
         
