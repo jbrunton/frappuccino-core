@@ -3,6 +3,7 @@ namespace "core", ->
     class @ApplicationModule extends core.Mixable    
         @include core.DependentMixin
         @include core.EventsMixin
+        @include core.Decoratable
         
         constructor: (@name) ->
         
@@ -24,6 +25,13 @@ namespace "core", ->
             
         create_model: ( class_name, opts ) ->
             @env.create( class_name, opts )
+            
+#        decorate: ( target, decorator, args... ) ->
+#        
+#            for key, value of decorator::
+#                target[key] = value
+#            
+#            decorator.apply( target )
         
     #class @ModuleCatalog
     
