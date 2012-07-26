@@ -1,6 +1,6 @@
 namespace "core", ->
 
-    class @Decoratable
+    class @Decorator
     
         decorate: ( target, decorator, args... ) ->
         

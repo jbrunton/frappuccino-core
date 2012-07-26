@@ -3,7 +3,7 @@ namespace "core", ->
     class @ApplicationModule extends core.Mixable    
         @include core.DependentMixin
         @include core.EventsMixin
-        @include core.Decoratable
+        @include core.Decorator
         
         constructor: (@name) ->
         
