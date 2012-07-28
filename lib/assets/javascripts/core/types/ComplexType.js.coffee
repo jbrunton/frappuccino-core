@@ -14,14 +14,13 @@
             serializeField = (propName, propTyName) ->
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
-                assocName = ":#{propName}"
-                include = _.include(tyDef.attr_accessible, propName) || includeSpec[assocName]?
+                include = _.include(tyDef.attr_accessible, propName) || includeSpec[propName]?
                 
                 if include
                     prop = obj[propName]
                     propVal = prop() unless not prop
                     
-                    data[propName] = propTy.serialize propVal, env, includeSpec[assocName]
+                    data[propName] = propTy.serialize propVal, env, includeSpec[propName]
             
             for propName, propTyName of tyDef.attr
                 serializeField propName, propTyName

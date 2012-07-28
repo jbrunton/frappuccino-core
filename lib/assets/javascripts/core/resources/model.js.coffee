@@ -17,8 +17,8 @@ namespace "core", ->
         constructor: (@env, data) ->
                 @deserialize(data || {})
                 
-        serialize: ->
-            @env.serialize @class_name, @
+        serialize: (opts) ->
+            @env.serialize @class_name, @, opts?.includes
             
         deserialize: (data) ->
             @env.deserialize @class_name, data, @
@@ -66,11 +66,11 @@ namespace "core", ->
             if @id()
                 env.repository.update_resource collection_name,
                     @id(),
-                    @serialize(),
+                    @serialize(opts),
                     _.defaults success: success, opts
             else
                 env.repository.create_resource collection_name,
-                    @serialize(),
+                    @serialize(opts),
                     _.defaults success: success, opts
                     
         refresh: ( opts ) ->
