@@ -18,7 +18,7 @@ describe "core.types.ListType", ->
             foos: -> [1, 2, 3]
         
         data = FooTy.serialize obj, env,
-            ":foos": true
+            foos: true
         
         expect(data.foos).toEqual [1, 2, 3]
         

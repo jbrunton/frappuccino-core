@@ -61,11 +61,11 @@ feature "Application Bootstrapper", ->
             app.run( bootstrapper )
             
         Then "the application should instantiate the application modules", ->
-            my_module = app.resolve_module( "my" )
+            my_module = app.resolve_module( "my_module" )
             expect( my_module instanceof MyModule ).toBe true
         
         And "the module event handlers should have been bound", ->
-            my_module = app.resolve_module( "my" )
+            my_module = app.resolve_module( "my_module" )
             spyOn( my_module, 'event_handler' )
             my_module.publish_event()
             expect( my_module.event_handler ).toHaveBeenCalled()
