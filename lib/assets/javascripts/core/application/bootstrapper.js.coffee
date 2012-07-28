@@ -26,7 +26,7 @@ namespace "core", ->
                 
                 module_regex = /(.*)Module/
                 for klass_name, klass of app_modules when matches = module_regex.exec( klass_name )
-                    module_name = _.string.underscored( matches[1] )
+                    module_name = _.string.underscored( matches[0] )
                     module = container.resolve( new klass( module_name ) )
                     @application.register_module( module )
                 
@@ -35,7 +35,7 @@ namespace "core", ->
                 
                 controller_regex = /(.*)Controller/
                 for klass_name, klass of app_controllers when matches = controller_regex.exec( klass_name )
-                    controller_name = _.string.underscored( matches[1] )
+                    controller_name = _.string.underscored( matches[0] )
                     controller = container.resolve( new klass( controller_name ) )
                     @application.register_controller( controller )
             
