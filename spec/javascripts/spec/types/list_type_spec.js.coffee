@@ -11,7 +11,8 @@ describe "core.types.ListType", ->
 
         FooTy = env.defineComplexType "Foo",
             attr:
-                foos: "List[number]"
+                foos:
+                    ty_name: "List[number]"
 
     it "serializes lists", ->
         obj =

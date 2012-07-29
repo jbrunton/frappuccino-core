@@ -12,14 +12,17 @@ describe "core.types.ComplexType", ->
         
         fooTy = env.defineComplexType "foo",
             attr:
-                baz: 'string'
-            attr_accessible: [ "baz" ]
+                baz:
+                    ty_name: 'string'
+                    accessible: true
             
         barTy = env.defineComplexType "bar",
             attr:
-                bar: 'string'
-                foo: 'foo'
-            attr_accessible: [ "bar" ]
+                bar:
+                    ty_name: 'string'
+                    accessible: true
+                foo:
+                    ty_name: 'foo'
 
     it "should have a 'tyName' property", ->
         expect(fooTy.tyName).toBe "foo"
