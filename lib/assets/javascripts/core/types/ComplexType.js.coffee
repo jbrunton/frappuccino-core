@@ -15,10 +15,14 @@
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
                 include = _.include(tyDef.attr_accessible, propName) || includeSpec[propName]?
+                association = _.include(tyDef.associations, propName)
                 
                 if include
                     prop = obj[propName]
                     propVal = prop() unless not prop
+                    
+                    if association
+                        propName = "#{propName}_attributes"
                     
                     data[propName] = propTy.serialize propVal, env, includeSpec[propName]
             

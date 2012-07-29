@@ -6,16 +6,51 @@ namespace "core", ->
             @_attr_accessible ?= []
             @_attr_accessible = @_attr_accessible.concat( _.toArray( arguments ) )
             
-        @attr: ( attr ) ->
+        @attr: ( attr, opts ) ->
+            if typeof attr == "string"
+                attr_name = attr
+                attr_ty_name = opts?.attr_type
+            else
+                attr_name = _.keys( attr )[0]
+                attr_ty_name = _.values( attr )[0]
+                
+            primary_key = opts?.primary_key
+            primary_key ?= attr_name == "id"
+            
+            association = opts?.association
+                
+            attr_def =
+                ty_name: attr_ty_name
+                
+            attr_def.primary_key = true unless !primary_key
+            attr_def.association = true unless !association
+            
+            
             @_attr ?= {}
-            @_attr = _.defaults( @_attr, attr )
+            @_attr[attr_name] = attr_def
             
         @ty_def: ->
-            { attr: @_attr, attr_accessible: @_attr_accessible }
+            ty_def = attr: @_attr
+
+            for attr_name in ( @_attr_accessible ?= [] )
+                ty_def.attr[attr_name]?.accessible = true
+                
+            ty_def
             
+        @has_many: ( association_name, opts ) ->
+            @_associations ?= []
+            @_associations.push( association_name )
+            
+            underlying_type = opts?.underlying_type
+            underlying_type ?= core.support.inflector.singularize( association_name )
+            
+            @attr association_name,
+                attr_type: "List[#{underlying_type}]"
+                association: true
         
-        constructor: (@env, data) ->
-                @deserialize(data || {})
+        constructor: (data, @env) ->
+            @env ?= core.Model.default_env
+            @deserialize(data || {})
                 
         serialize: (opts) ->
             @env.serialize @class_name, @, opts?.includes

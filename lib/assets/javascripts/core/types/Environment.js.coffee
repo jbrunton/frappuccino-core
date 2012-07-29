@@ -48,10 +48,10 @@
             ty = @getType tyName
             ty.deserialize data, this, target
             
-        create: (tyName, opts...) ->
+        create: (tyName, data) ->
             tyClass = @_classes[tyName]
             if tyClass?
-                new tyClass @, opts...
+                new tyClass data, @
             else
                 {}
         

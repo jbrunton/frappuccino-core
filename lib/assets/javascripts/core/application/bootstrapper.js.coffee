@@ -48,7 +48,9 @@ namespace "core", ->
                     @application.register_helper( helper_name, helper )
                     
             register_models: ->
-            
+                core.Model.default_env = @application.env
+
+                # TODO: DRY this up (see also ComplexType serialization)
                 is_model = ( model_class ) ->
                     model_class.prototype.constructor.__super__?.constructor == core.Model
                     
