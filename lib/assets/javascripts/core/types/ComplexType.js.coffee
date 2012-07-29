@@ -5,17 +5,17 @@
         constructor: (@tyName, @tyDef, @propertyFactory) ->
             @kind = "complex"
         
-        serialize: (obj, env, includeSpec) ->
+        serialize: (obj, env, includeSpec, nested) ->
         
             data = {}
             tyDef = @tyDef
-            includeSpec = includeSpec ?= {}
+            includeSpec ?= {}
             
             serializeField = (propName, propDef) ->
                 propTyName = propDef.ty_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
-                include = propDef.accessible || includeSpec[propName]?
+                include = propDef.accessible || includeSpec[propName]? || ( propDef.primary_key && nested )
                 
                 if include
                     prop = obj[propName]
@@ -24,7 +24,7 @@
                     if propDef.association
                         propName = "#{propName}_attributes"
                     
-                    data[propName] = propTy.serialize propVal, env, includeSpec[propName]
+                    data[propName] = propTy.serialize propVal, env, includeSpec[propName], true
             
             for propName, propTyName of tyDef.attr
                 serializeField propName, propTyName
