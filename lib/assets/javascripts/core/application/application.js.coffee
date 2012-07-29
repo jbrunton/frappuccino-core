@@ -80,6 +80,10 @@ namespace "core", ->
         container = bootstrapper.configure_container( @ )
         container.resolve( @ )
 
+        bootstrapper.configure_environment( @env )
+
+        # TODO: should these be in the Application class, not the Bootstrapper?  certainly, this
+        # needs tidying...
         bootstrapper.register_modules( container )   
         bootstrapper.register_helpers( container )
         bootstrapper.register_models()

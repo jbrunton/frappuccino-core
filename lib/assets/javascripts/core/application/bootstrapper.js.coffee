@@ -18,6 +18,10 @@ namespace "core", ->
                 @application.mediator = container.resolve "Mediator"
                 
                 container
+                
+            configure_environment: ( env ) ->
+                env.defineSimpleType "number"
+                env.defineSimpleType "string"
             
             register_modules: (container) ->
                 

@@ -11,17 +11,17 @@
             tyDef = @tyDef
             includeSpec = includeSpec ?= {}
             
-            serializeField = (propName, propTyName) ->
+            serializeField = (propName, propDef) ->
+                propTyName = propDef.ty_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
-                include = _.include(tyDef.attr_accessible, propName) || includeSpec[propName]?
-                association = _.include(tyDef.associations, propName)
+                include = propDef.accessible || includeSpec[propName]?
                 
                 if include
                     prop = obj[propName]
                     propVal = prop() unless not prop
                     
-                    if association
+                    if propDef.association
                         propName = "#{propName}_attributes"
                     
                     data[propName] = propTy.serialize propVal, env, includeSpec[propName]
@@ -40,7 +40,8 @@
             if !data?
                 return target
             
-            deserializeField = (propName, propTyName) ->
+            deserializeField = (propName, propDef) ->
+                propTyName = propDef.ty_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
                 propVal = propTy.deserialize data[propName], env
