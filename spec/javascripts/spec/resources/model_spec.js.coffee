@@ -65,7 +65,7 @@ describe "core.Model", ->
                     ty_name: "List[string]"
                     association: true
     
-        it "implicity infers the underlying type if none is provided", ->
+        it "infers the underlying type if none is provided", ->
             Blog = class extends core.Model
                 @has_many "blog_posts"
                 
@@ -74,3 +74,48 @@ describe "core.Model", ->
                     ty_name: "List[blog_post]"
                     association: true
         
+    describe "@belongs_to", ->
+    
+        it "defines an association for the underlying type and adds a foreign key attribute", ->
+            Blog = class extends core.Model
+                @belongs_to "user",
+                    underlying_type: "person"
+                    
+            expect( Blog.ty_def() ).toEqual attr:
+                user:
+                    ty_name: "person"
+                    association: true
+                user_id:
+                    ty_name: "number"
+            
+        it "infers the underlying type if none is provided", ->
+            Blog = class extends core.Model
+                @belongs_to "user"
+                
+            expect( Blog.ty_def() ).toEqual attr:
+                user:
+                    ty_name: "user"
+                    association: true
+                user_id:
+                    ty_name: "number"
+                    
+    describe "@has_one", ->
+    
+        it "defines an association for the underlying type", ->
+            Blog = class extends core.Model
+                @has_one "blog_post",
+                    underlying_type: "content"
+                    
+            expect( Blog.ty_def() ).toEqual attr:
+                blog_post:
+                    ty_name: "content"
+                    association: true
+            
+        it "infers the underlying type if none is provided", ->
+            Blog = class extends core.Model
+                @has_one "blog_post"
+                
+            expect( Blog.ty_def() ).toEqual attr:
+                blog_post:
+                    ty_name: "blog_post"
+                    association: true

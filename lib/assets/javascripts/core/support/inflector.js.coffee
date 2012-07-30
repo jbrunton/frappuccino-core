@@ -30,6 +30,9 @@ namespace "core.support", ->
         
         tableize: ( class_name ) ->
             @pluralize( @underscore( class_name ) )
+            
+        foreign_key: ( class_name ) ->
+            "#{@underscore( class_name )}_id"
         
         inflections: ( callback ) ->
             self = @

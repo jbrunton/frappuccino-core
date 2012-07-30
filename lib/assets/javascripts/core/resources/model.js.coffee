@@ -47,6 +47,25 @@ namespace "core", ->
             @attr association_name,
                 attr_type: "List[#{underlying_type}]"
                 association: true
+                
+        @belongs_to: ( association_name, opts ) ->
+            @has_one association_name, opts
+            
+            foreign_key = core.support.inflector.foreign_key( association_name )
+            
+            @attr foreign_key,
+                attr_type: "number"
+                
+        @has_one: ( association_name, opts ) ->
+            @_associations ?= []
+            @_associations.push( association_name )
+            
+            underlying_type = opts?.underlying_type
+            underlying_type ?= association_name
+            
+            @attr association_name,
+                attr_type: underlying_type
+                association: true        
         
         constructor: (data, @env) ->
             @env ?= core.Model.default_env

@@ -42,6 +42,11 @@ describe "core.support.Inflector", ->
         it "converts a camel case, singular class name to an underscored, plural table name", ->
             expect( inflector.classify( "some_classes") ).toBe( "SomeClass" )
             
+    describe "#foreign_key", ->
+    
+        it "returns the name of a foreign key given a class name", ->
+            expect( inflector.foreign_key( "Blog" ) ).toBe( "blog_id" )
+            
 describe "core.support.inflector", ->
 
     it "is an instance of core.support.Inflector", ->
