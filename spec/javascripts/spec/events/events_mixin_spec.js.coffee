@@ -1,6 +1,6 @@
 describe "core.EventsMixin", ->
 
-    class Foo extends core.Mixable
+    class Foo extends core.BaseObject
         @include core.EventsMixin
         
         @on "Bar", ->

@@ -1,6 +1,6 @@
 namespace "core", ->
  
- class @Application extends core.Mixable
+ class @Application extends core.BaseObject
     @include core.DependentMixin
     
     @dependency renderer: "Renderer"

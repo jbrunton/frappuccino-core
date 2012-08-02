@@ -1,6 +1,6 @@
 namespace "core", ->
 
-    class @Sandbox extends core.Mixable
+    class @Sandbox extends core.BaseObject
         @include core.DependentMixin
     
         @dependency mediator: "Mediator"

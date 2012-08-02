@@ -1,9 +1,8 @@
 namespace "core", ->
 
-    class @ApplicationModule extends core.Mixable    
+    class @ApplicationModule extends core.BaseObject    
         @include core.DependentMixin
         @include core.EventsMixin
-        @include core.Decorator
         
         constructor: (@name) ->
         
