@@ -1,8 +1,6 @@
 @namespace "core.types", ->
 
-    class @Environment extends core.BaseObject    
-        @include core.DependentMixin
-    
+    class @Environment extends core.DependentObject    
         @dependency propertyFactory: "PropertyFactory"
         @dependency repository: "ModelRepository"
         

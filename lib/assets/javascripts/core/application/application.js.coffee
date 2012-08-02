@@ -1,8 +1,6 @@
 namespace "core", ->
  
- class @Application extends core.BaseObject
-    @include core.DependentMixin
-    
+ class @Application extends core.DependentObject
     @dependency renderer: "Renderer"
     @dependency router: "Router"
     @dependency mediator: "Mediator"
