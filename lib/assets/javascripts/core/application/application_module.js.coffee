@@ -1,8 +1,6 @@
 namespace "core", ->
 
-    class @ApplicationModule extends core.DependentObject    
-        @include core.EventsMixin
-        
+    class @ApplicationModule extends core.EventObject    
         constructor: (@name) ->
         
         @dependency sandbox: "Sandbox", -> @
