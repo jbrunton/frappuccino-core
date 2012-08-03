@@ -3,7 +3,7 @@ namespace "core", ->
     class @Model
     
         @_attr_accessible: []
-        @_attr = {}
+        @_attr: {}
     
         @attr_accessible: ->
             @_attr_accessible = @_attr_accessible.concat( _.toArray( arguments ) )
