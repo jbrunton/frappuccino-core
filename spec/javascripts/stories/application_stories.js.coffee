@@ -50,7 +50,7 @@ feature "Application Bootstrapper", ->
             app = new core.Application
             bootstrapper = test_helper.Bootstrapper()
         
-        When "I configure and run the application with the boostrapper", ->
+        When "I configure and run the application with the bootstrapper", ->
             MyModule = class extends core.ApplicationModule
                 publish_event: -> @sandbox.publish "event"
                 @on "event", -> @event_handler()                    
@@ -61,11 +61,11 @@ feature "Application Bootstrapper", ->
             app.run( bootstrapper )
             
         Then "the application should instantiate the application modules", ->
-            my_module = app.resolve_module( "MyModule" )
+            my_module = app.resolve_module( "my_module" )
             expect( my_module instanceof MyModule ).toBe true
         
         And "the module event handlers should have been bound", ->
-            my_module = app.resolve_module( "MyModule" )
+            my_module = app.resolve_module( "my_module" )
             spyOn( my_module, 'event_handler' )
             my_module.publish_event()
             expect( my_module.event_handler ).toHaveBeenCalled()

@@ -18,15 +18,20 @@ namespace "core", ->
                 @application.mediator = container.resolve "Mediator"
                 
                 container
+                
+            configure_environment: ( env ) ->
+                env.defineSimpleType "number"
+                env.defineSimpleType "string"
             
             register_modules: (container) ->
                 
                 app_modules = @application.config "app.modules"
                 app_modules ?= app?.modules
                 
-                module_regex = /.*Module/
-                for name, klass of app_modules when module_regex.test( name )
-                    module = container.resolve( new klass( name ) )
+                module_regex = /(.*)Module/
+                for klass_name, klass of app_modules when matches = module_regex.exec( klass_name )
+                    module_name = _.string.underscored( matches[0] )
+                    module = container.resolve( new klass( module_name ) )
                     @application.register_module( module )
                 
                 app_controllers = @application.config "app.controllers"
@@ -34,7 +39,7 @@ namespace "core", ->
                 
                 controller_regex = /(.*)Controller/
                 for klass_name, klass of app_controllers when matches = controller_regex.exec( klass_name )
-                    controller_name = _.string.underscored( matches[1] )
+                    controller_name = _.string.underscored( matches[0] )
                     controller = container.resolve( new klass( controller_name ) )
                     @application.register_controller( controller )
             
@@ -47,7 +52,9 @@ namespace "core", ->
                     @application.register_helper( helper_name, helper )
                     
             register_models: ->
-            
+                core.Model.default_env = @application.env
+
+                # TODO: DRY this up (see also ComplexType serialization)
                 is_model = ( model_class ) ->
                     model_class.prototype.constructor.__super__?.constructor == core.Model
                     

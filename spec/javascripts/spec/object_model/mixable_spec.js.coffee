@@ -1,10 +1,10 @@
-describe "core.Mixable", ->
+describe "core.BaseObject", ->
 
     class Foo
         @foo: "foo"
         bar: "bar"
         
-    class Bar extends core.Mixable
+    class Bar extends core.BaseObject
         @include Foo
 
     describe "the @include method", ->

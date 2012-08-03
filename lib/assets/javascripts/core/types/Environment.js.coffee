@@ -1,8 +1,6 @@
 @namespace "core.types", ->
 
-    class @Environment extends core.Mixable    
-        @include core.DependentMixin
-    
+    class @Environment extends core.DependentObject    
         @dependency propertyFactory: "PropertyFactory"
         @dependency repository: "ModelRepository"
         
@@ -48,10 +46,10 @@
             ty = @getType tyName
             ty.deserialize data, this, target
             
-        create: (tyName, opts...) ->
+        create: (tyName, data) ->
             tyClass = @_classes[tyName]
             if tyClass?
-                new tyClass @, opts
+                new tyClass data, @
             else
                 {}
         

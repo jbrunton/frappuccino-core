@@ -11,14 +11,15 @@ describe "core.types.ListType", ->
 
         FooTy = env.defineComplexType "Foo",
             attr:
-                foos: "List[number]"
+                foos:
+                    ty_name: "List[number]"
 
     it "serializes lists", ->
         obj =
             foos: -> [1, 2, 3]
         
         data = FooTy.serialize obj, env,
-            ":foos": true
+            foos: true
         
         expect(data.foos).toEqual [1, 2, 3]
         

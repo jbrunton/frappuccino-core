@@ -24,8 +24,7 @@ describe "core.Container", ->
         expect( container.resolve "MyClass" ).toBe( container.resolve "MyClass" )        
         
     it "resolves nested dependencies", ->
-        class MyClass extends core.Mixable
-            @include core.DependentMixin
+        class MyClass extends core.DependentObject
             @dependency object: "object"
             
         my_object = new Object
@@ -39,8 +38,7 @@ describe "core.Container", ->
         expect( my_instance.object ).toBe my_object
 
     it "should resolve dependencies defined by deferred functions", ->
-        class MyClass extends core.Mixable
-            @include core.DependentMixin
+        class MyClass extends core.DependentObject
             @dependency object: -> my_object
             
         my_object = new Object

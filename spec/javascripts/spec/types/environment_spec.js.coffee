@@ -38,14 +38,17 @@ describe "core.types.Environment", ->
         
             env.defineComplexType "foo",
                 attr:
-                    baz: 'string'
-                attr_accessible: [ "baz" ]
+                    baz:
+                        ty_name: 'string'
+                        accessible: true
             
             env.defineComplexType "bar",
                 attr:
-                    bar: 'string'
-                    foo: 'foo'
-                attr_accessible: [ "bar" ]
+                    bar:
+                        ty_name: 'string'
+                        accessible: true
+                    foo:
+                        ty_name: 'foo'
                 
         describe "serialize", ->
         

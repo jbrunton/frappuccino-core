@@ -1,6 +1,6 @@
 namespace "core", ->
 
-    class @EventsMixin
+    class @EventsModule
     
         @on: (eventName, handler) ->
             handlerName = "@#{eventName}"
@@ -11,3 +11,6 @@ namespace "core", ->
 
         publish: (eventName, args) ->
             @sandbox.publish eventName, args
+            
+    class @EventObject extends core.DependentObject
+        @include core.EventsModule

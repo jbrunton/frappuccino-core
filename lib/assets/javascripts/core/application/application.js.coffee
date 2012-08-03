@@ -1,8 +1,6 @@
 namespace "core", ->
  
- class @Application extends core.Mixable
-    @include core.DependentMixin
-    
+ class @Application extends core.DependentObject
     @dependency renderer: "Renderer"
     @dependency router: "Router"
     @dependency mediator: "Mediator"
@@ -13,6 +11,9 @@ namespace "core", ->
     
     resolve_module: ( module_name ) ->
         @modules[ module_name ]
+        
+    resolve_helper: ( helper_name ) ->
+        @helpers[ helper_name ]
     
     running: false
     
@@ -77,6 +78,10 @@ namespace "core", ->
         container = bootstrapper.configure_container( @ )
         container.resolve( @ )
 
+        bootstrapper.configure_environment( @env )
+
+        # TODO: should these be in the Application class, not the Bootstrapper?  certainly, this
+        # needs tidying...
         bootstrapper.register_modules( container )   
         bootstrapper.register_helpers( container )
         bootstrapper.register_models()

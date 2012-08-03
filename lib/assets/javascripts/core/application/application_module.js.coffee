@@ -1,9 +1,6 @@
 namespace "core", ->
 
-    class @ApplicationModule extends core.Mixable    
-        @include core.DependentMixin
-        @include core.EventsMixin
-        
+    class @ApplicationModule extends core.EventObject    
         constructor: (@name) ->
         
         @dependency sandbox: "Sandbox", -> @
@@ -18,11 +15,19 @@ namespace "core", ->
         publish: ->
             @sandbox.publish.apply( sandbox, arguments )
             
-        bind_subscriptions: ->
-            @sandbox.bind_subscriptions.apply( sandbox, arguments )
+        bind_subscriptions: (target) ->
+            @sandbox.bind_subscriptions.apply( @sandbox, [target] )
+            target.publish = @sandbox.publish
             
         create_model: ( class_name, opts ) ->
             @env.create( class_name, opts )
+            
+#        decorate: ( target, decorator, args... ) ->
+#        
+#            for key, value of decorator::
+#                target[key] = value
+#            
+#            decorator.apply( target )
         
     #class @ModuleCatalog
     
