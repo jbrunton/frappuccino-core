@@ -2,11 +2,10 @@ namespace "core.validators", ->
 
     class @PresenceValidator
     
-        constructor: ( @attribute, @message ) ->
+        constructor: ( @attribute, @opts ) ->
+            @message = @opts?.message
             @message ?= "please provide a value for #{@attribute}"
-        
+                    
         validate: ( model ) ->
             unless model[@attribute] and model[@attribute]()
-                model.errors.add( @attribute, @message )
-                model[@attribute].is_valid(false)
-            
+                model[@attribute].errors.push( @message )

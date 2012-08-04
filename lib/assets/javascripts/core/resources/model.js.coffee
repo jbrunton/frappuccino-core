@@ -74,8 +74,7 @@ namespace "core", ->
         constructor: (data, @env) ->
             @env ?= core.Model.default_env
             @deserialize(data || {})
-            @errors = new core.ModelErrors
-            @_forms = {}
+            @initialize_validators()
                 
         serialize: (opts) ->
             @env.serialize @class_name, @, opts?.includes
