@@ -119,3 +119,13 @@ describe "core.Model", ->
                 blog_post:
                     ty_name: "blog_post"
                     association: true
+
+    describe "@validates", ->
+    
+        it "adds the relevant validators to the prototype", ->
+            Blog = class extends core.Model
+                @attr title: "string"
+                @validates "title", presence: true
+            
+            # TODO: this is not really a unit test - make a feature test instead, maybe?
+            expect( Blog::validators ).toContain( jasmine.any(core.validators.PresenceValidator) )
