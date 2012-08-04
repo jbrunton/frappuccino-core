@@ -16,6 +16,7 @@ namespace "core", ->
                 @add_validator( attribute, validator_name, validator_opts )
                 
         initialize_validators: ->
+            return unless @validated_attributes?
             for attribute in @validated_attributes
                 errors = ko.observableArray([])
                 @[attribute].errors = errors
