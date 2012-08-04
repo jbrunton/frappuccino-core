@@ -16,7 +16,11 @@ namespace "core.types", ->
     class @KoPropertyFactory
     
         createProperty: (initVal) ->
-            ko.observable initVal
+            prop = ko.observable initVal
+            prop.is_valid = ko.observable(true)
+            prop
             
         createArrayProperty: (initVal) ->
-            ko.observableArray initVal
+            prop = ko.observableArray initVal
+            prop.is_valid = ko.observable(true)
+            prop

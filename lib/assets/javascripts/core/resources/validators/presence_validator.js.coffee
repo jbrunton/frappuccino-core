@@ -8,4 +8,5 @@ namespace "core.validators", ->
         validate: ( model ) ->
             unless model[@attribute] and model[@attribute]()
                 model.errors.add( @attribute, @message )
+                model[@attribute].is_valid(false)
             

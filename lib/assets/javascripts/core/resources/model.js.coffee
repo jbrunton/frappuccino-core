@@ -75,6 +75,7 @@ namespace "core", ->
             @env ?= core.Model.default_env
             @deserialize(data || {})
             @errors = new core.ModelErrors
+            @_forms = {}
                 
         serialize: (opts) ->
             @env.serialize @class_name, @, opts?.includes
@@ -134,3 +135,39 @@ namespace "core", ->
                     
         refresh: ( opts ) ->
             @load( @id(), opts )
+            
+        
+        # form methods
+        
+#        forms: ( form_name ) ->
+#            @_forms[form_name] ?= {}
+#            @_forms[form_name]
+#        
+#        copy_attribute: ( attribute_name ) ->
+#            # TODO: refactor this method
+#            ko.observable( @[attribute_name]() )
+#        
+#        field_for: ( form_name, attribute ) ->
+#            form = @forms( form_name )
+#            form[attribute] = @copy_attribute( attribute )            
+#        
+#        action_for: ( form_name, action ) ->
+#            form = @forms( form_name )
+#        
+#        form_for: ( form_name, callback ) ->
+#            model = @
+#            form =
+#                field: ( attribute ) ->
+#                    model.field_for( form_name, attribute )
+#                    
+#                fields: ( fields... ) ->
+#                    for field in fields
+#                        model.field_for( form_name, field )
+#                
+#                action: ( action ) ->
+#                    model.action_for( form_name, action )
+#                    
+#                actions: ( actions... ) ->
+#                    for action in actions
+#                        model.action_for( form_name, action )
+#            callback( form )
