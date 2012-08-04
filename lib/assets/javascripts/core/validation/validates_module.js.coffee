@@ -15,14 +15,18 @@ namespace "core", ->
             for validator_name, validator_opts of validators
                 @add_validator( attribute, validator_name, validator_opts )
                 
-        initialize_validators: ->
-            return unless @validated_attributes?
-            for attribute in @validated_attributes
-                errors = ko.observableArray([])
-                @[attribute].errors = errors
+        initialize_validator: ( attribute ) ->
+            errors = ko.observableArray([])
+            attribute.errors = errors
 
-                is_valid = -> errors().length == 0
-                @[attribute].is_valid = ko.computed(is_valid, @)
+            is_valid = -> errors().length == 0
+            attribute.is_valid = ko.computed(is_valid, @)
+            
+                
+        initialize_validators: ->
+            return unless @validated_attributes
+            for attribute_name in @validated_attributes
+                @initialize_validator( @[attribute_name] )
             
         validate: ->
             if  @validated_attributes

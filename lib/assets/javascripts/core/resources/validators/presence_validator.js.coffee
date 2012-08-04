@@ -1,11 +1,14 @@
 namespace "core.validators", ->
 
-    class @PresenceValidator
+    class @PresenceValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, @opts ) ->
-            @message = @opts?.message
-            @message ?= "please provide a value for #{@attribute}"
+        constructor: ( @attribute, opts ) ->
+            @message = opts?.message
+            @message ?= @default_message()
                     
+        default_message: ->
+            "please provide a value for #{@attribute}"
+    
         validate: ( model ) ->
-            unless model[@attribute] and model[@attribute]()
-                model[@attribute].errors.push( @message )
+            unless @attribute_value( model )?
+                @error( model, @message )
