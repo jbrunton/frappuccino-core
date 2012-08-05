@@ -11,5 +11,6 @@ namespace "core.validators", ->
             "please provide a value for #{@attribute}"
     
         validate: ( model ) ->
-            unless @attribute_value( model )?
+            input = @attribute_value( model )
+            unless input? and input.length > 0
                 @error( model, @message )
