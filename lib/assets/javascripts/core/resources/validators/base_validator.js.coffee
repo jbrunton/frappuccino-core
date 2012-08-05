@@ -4,10 +4,15 @@ namespace "core.validators", ->
     
         initialize: ( model ) ->
         
-        attribute_value: ( model ) ->
-            if model[@attribute]?
-                model[@attribute]()
+        attribute_value: ( model, attribute_name ) ->
+            attribute_name ?= @attribute
+            if model[attribute_name]?
+                model[attribute_name]()
                 
-        error: ( model, message ) ->
-            model[@attribute].errors.push( @message )
+        enum_attributes: ->
+            [ @attribute ]
+                
+        error: ( model, message, attribute_name ) ->
+            attribute_name ?= @attribute
+            model[attribute_name].errors.push( @message )
         

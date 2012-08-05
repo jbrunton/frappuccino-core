@@ -8,14 +8,15 @@ namespace "core", ->
             @::validators ?= []
             @::validators.push( validator )
             @::validated_attributes ?= []
-            unless _.include( @::validated_attributes, attribute )
-                @::validated_attributes.push( attribute )
+            for attribute_name in validator.enum_attributes()
+                unless _.include( @::validated_attributes, attribute_name )
+                    @::validated_attributes.push( attribute_name )
             
         @validates: ( attribute, validators ) ->
             for validator_name, validator_opts of validators
                 @add_validator( attribute, validator_name, validator_opts )
                 
-        initialize_validator: ( attribute ) ->
+        initialize_attribute: ( attribute ) ->
             errors = ko.observableArray([])
             attribute.errors = errors
 
@@ -24,9 +25,11 @@ namespace "core", ->
             
                 
         initialize_validators: ->
-            return unless @validated_attributes
+            return unless @validated_attributes and @validators
+            for validator in @validators
+                validator.initialize( @ )
             for attribute_name in @validated_attributes
-                @initialize_validator( @[attribute_name] )
+                @initialize_attribute( @[attribute_name] )
             
         validate: ->
             if  @validated_attributes
