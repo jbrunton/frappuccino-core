@@ -75,6 +75,9 @@ namespace "core", ->
             @env ?= core.Model.default_env
             @deserialize(data || {})
             @initialize_validators()
+
+        is_new_record: ->
+            !(@id()? and @id() > 0)
                 
         serialize: (opts) ->
             @env.serialize @class_name, @, opts?.includes

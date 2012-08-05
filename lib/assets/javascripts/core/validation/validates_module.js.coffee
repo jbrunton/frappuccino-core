@@ -38,7 +38,10 @@ namespace "core", ->
                 
             if @validators
                 for validator in @validators
-                    validator.validate( @ )
+                    if ( not validator.if? and not validator.unless? ) or
+                        ( validator.if? and validator.if( @ ) ) or
+                        ( validator.unless? and !validator.unless( @ ) )
+                            validator.validate( @ )
                 
         is_valid: ->
             model = @

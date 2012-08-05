@@ -2,7 +2,8 @@ namespace "core.validators", ->
 
     class @PresenceValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, opts ) ->
+        constructor: ( attribute, opts ) ->
+            super( attribute, opts )
             @message = opts?.message
             @message ?= @default_message()
                     

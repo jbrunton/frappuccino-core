@@ -2,7 +2,8 @@ namespace "core.validators", ->
 
     class @FormatValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, opts ) ->
+        constructor: ( attribute, opts ) ->
+            super( attribute, opts )
             @format = opts.with
             @message = opts?.message
             @message ?= "input must be in the specified format"

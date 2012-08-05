@@ -2,7 +2,8 @@ namespace "core.validators", ->
 
     class @LengthValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, opts ) ->
+        constructor: ( attribute, opts ) ->
+            super( attribute, opts )
             @min = opts.min
             @max = opts.max
             @message = opts?.message

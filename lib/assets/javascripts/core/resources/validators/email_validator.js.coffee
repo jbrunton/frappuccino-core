@@ -2,7 +2,8 @@ namespace "core.validators", ->
 
     class @EmailValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, opts ) ->
+        constructor: ( attribute, opts ) ->
+            super( attribute, opts )
             @message = opts?.message
             @message ?= "please provide a valid email address"
                     

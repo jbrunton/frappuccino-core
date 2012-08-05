@@ -2,7 +2,8 @@ namespace "core.validators", ->
 
     class @ConfirmationValidator extends core.validators.BaseValidator
     
-        constructor: ( @attribute, opts ) ->
+        constructor: ( attribute, opts ) ->
+            super( attribute, opts )
             @confirmation_attribute = "#{@attribute}_confirmation"
             @message = opts?.message
             @message ?= "values do not match"
