@@ -74,7 +74,7 @@ namespace "core", ->
         constructor: (data, @env) ->
             @env ?= core.Model.default_env
             @deserialize(data || {})
-            @initialize_validators()
+            @initialize_validator()
 
         is_new_record: ->
             !(@id()? and @id() > 0)

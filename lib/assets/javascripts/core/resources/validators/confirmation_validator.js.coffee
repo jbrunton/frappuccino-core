@@ -8,7 +8,7 @@ namespace "core.validators", ->
             @message = opts?.message
             @message ?= "values do not match"
             
-        initialize: ( model ) ->
+        initialize_model: ( model ) ->
             model[@confirmation_attribute] = ko.observable()
             
         enum_attributes: ->

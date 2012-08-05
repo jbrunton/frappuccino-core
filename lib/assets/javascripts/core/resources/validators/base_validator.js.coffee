@@ -6,7 +6,7 @@ namespace "core.validators", ->
             @if = opts?.if
             @unless = opts?.unless
     
-        initialize: ( model ) ->
+        initialize_model: ( model ) ->
         
         attribute_value: ( model, attribute_name ) ->
             attribute_name ?= @attribute
