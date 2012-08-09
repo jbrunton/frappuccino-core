@@ -18,5 +18,5 @@ namespace "core.validators", ->
                 
         error: ( model, message, attribute_name ) ->
             attribute_name ?= @attribute
-            model[attribute_name].errors.push( @message )
+            model.validation_error( @message, attribute_name )
         

@@ -20,8 +20,9 @@ namespace "core", ->
                 container
                 
             configure_environment: ( env ) ->
-                env.defineSimpleType "number"
-                env.defineSimpleType "string"
+                env.defineSimpleType "Inherit"
+                env.defineSimpleType "Number"
+                env.defineSimpleType "String"
             
             register_modules: (container) ->
                 
@@ -62,5 +63,5 @@ namespace "core", ->
                 app_models ?= app?.models
            
                 for model_name, model_class of app_models when is_model( model_class )
-                    model_name = _.string.underscored( model_name )
+                    # model_name = _.string.underscored( model_name )
                     @application.register_model( model_name, model_class )

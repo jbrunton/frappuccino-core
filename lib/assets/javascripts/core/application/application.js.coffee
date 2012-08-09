@@ -60,7 +60,7 @@ namespace "core", ->
         
     register_model: ( model_name, model_class ) ->
         model_class::class_name = model_name
-        model_class::collection_name = "#{model_name}s"
+        model_class::collection_name = core.support.inflector.tableize( model_name )
         @env.register_model model_class
         
     bind_helper: ( helper_name, target ) ->

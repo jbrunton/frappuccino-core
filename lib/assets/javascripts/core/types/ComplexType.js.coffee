@@ -12,7 +12,7 @@
             includeSpec ?= {}
             
             serializeField = (propName, propDef) ->
-                propTyName = propDef.ty_name
+                propTyName = propDef.class_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
                 include = propDef.accessible || includeSpec[propName]? || ( propDef.primary_key && nested )
@@ -26,7 +26,7 @@
                     
                     data[propName] = propTy.serialize propVal, env, includeSpec[propName], true
             
-            for propName, propTyName of tyDef.attr
+            for propName, propTyName of tyDef.attributes
                 serializeField propName, propTyName
             
             data
@@ -41,7 +41,7 @@
                 return target
             
             deserializeField = (propName, propDef) ->
-                propTyName = propDef.ty_name
+                propTyName = propDef.class_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
                 propVal = propTy.deserialize data[propName], env
@@ -55,7 +55,7 @@
                 
                     target[propName] = prop
             
-            for propName, propTyName of tyDef.attr
+            for propName, propTyName of tyDef.attributes
                 deserializeField propName, propTyName 
             
             target

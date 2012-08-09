@@ -89,9 +89,11 @@ namespace "core", ->
     class @ValidatesModule
     
         @validates: ( attribute_name, opts ) ->
-            @::validator ?= new ModelValidator
+            validator = new ModelValidator
             attribute_validator = new AttributeValidator( attribute_name, opts )
-            @::validator.add_attribute_validator( attribute_validator )
+            validator.add_attribute_validator( attribute_validator )
+            @::validators ?= []
+            @::validators.push( validator )
                 
         initialize_validator: ->
             if @validator?

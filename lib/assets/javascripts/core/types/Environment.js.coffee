@@ -21,7 +21,7 @@
         
         register_model: ( model_class ) ->
             @defineComplexType model_class::class_name,
-                model_class.ty_def(),
+                model_class::,
                 model_class
         
         getType: (tyName) ->
