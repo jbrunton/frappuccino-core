@@ -14,13 +14,13 @@ describe "core.types.ComplexType", ->
             attributes:
                 baz:
                     class_name: 'string'
-                    accessible: true
+                    serialize: true
             
         barTy = env.defineComplexType "bar",
             attributes:
                 bar:
                     class_name: 'string'
-                    accessible: true
+                    serialize: true
                 foo:
                     class_name: 'foo'
 

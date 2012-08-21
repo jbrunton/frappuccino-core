@@ -15,7 +15,7 @@
                 propTyName = propDef.class_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
-                include = propDef.accessible || includeSpec[propName]? || ( propDef.primary_key && nested )
+                include = propDef.serialize? || includeSpec[propName]? || ( propDef.primary_key && nested )
                 
                 if include
                     prop = obj[propName]

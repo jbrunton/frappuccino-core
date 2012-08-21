@@ -40,13 +40,13 @@ describe "core.types.Environment", ->
                 attributes:
                     baz:
                         class_name: 'string'
-                        accessible: true
+                        serialize: true
             
             env.defineComplexType "bar",
                 attributes:
                     bar:
                         class_name: 'string'
-                        accessible: true
+                        serialize: true
                     foo:
                         class_name: 'foo'
                 

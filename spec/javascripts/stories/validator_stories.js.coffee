@@ -17,8 +17,8 @@ feature "core.ModelValidator", ->
         
         When "I configure and run the application with the bootstrapper", ->
             BlogPost = class extends core.Model
-                @attr id: "number"
-                @attr title: "string"
+                @attr "id"
+                @attr "title"
                 
                 @validates "title", presence: true
                 
@@ -29,7 +29,7 @@ feature "core.ModelValidator", ->
             
         Then "I should be able to validate the model", ->
             blog_post = new BlogPost
-            expect( blog_post.is_valid() ).toBe( false )
+            expect( blog_post.validate() ).toBe( false )
             
             blog_post.title( "Some Title" )
-            expect( blog_post.is_valid() ).toBe( true )
+            expect( blog_post.validate() ).toBe( true )

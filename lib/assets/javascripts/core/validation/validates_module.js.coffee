@@ -33,11 +33,11 @@ namespace "core", ->
                 @initialize_attribute( model, attr_name )
                 
         initialize_attribute: ( model, attribute_name ) ->
-            errors = ko.observableArray([])
+            errors = if ko? then ko.observableArray([]) else []
             model[attribute_name].errors = errors
 
             is_valid = ( -> errors().length == 0 )
-            model[attribute_name].is_valid = ko.computed(is_valid, model)
+            model[attribute_name].is_valid = if ko? then ko.computed(is_valid, model) else is_valid
 
     class AttributeValidator
         
@@ -89,11 +89,9 @@ namespace "core", ->
     class @ValidatesModule
     
         @validates: ( attribute_name, opts ) ->
-            validator = new ModelValidator
+            @::validator ?= new ModelValidator
             attribute_validator = new AttributeValidator( attribute_name, opts )
-            validator.add_attribute_validator( attribute_validator )
-            @::validators ?= []
-            @::validators.push( validator )
+            @::validator.add_attribute_validator( attribute_validator )
                 
         initialize_validator: ->
             if @validator?
@@ -106,11 +104,11 @@ namespace "core", ->
                 @errors.push( message )
             
         validate_attribute: ( attribute_name ) ->
-            @validator.validate_attribute( @, attribute_name )
+            @validator?.validate_attribute( @, attribute_name )
             @[attribute_name].is_valid()
             
         validate: ->
-            @validator.validate( @ )
+            @validator?.validate( @ )
             @is_valid()
 
 #        validate: ->

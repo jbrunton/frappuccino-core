@@ -17,17 +17,17 @@ feature "core.Model", ->
         
         When "I configure and run the application with the bootstrapper", ->
             Blog = class extends core.Model
-                @attr id: "number"
-                @attr title: "string"
-                @has_many "blog_posts", underlying_type: "blog_post"
+                @attr "id"
+                @attr "title"
+                @has_many "blog_posts"
 
-                @attr_accessible "title", "blog_posts"
+                @attr_serialize "title", "blog_posts"
                 
             BlogPost = class extends core.Model
-                @attr id: "number"
-                @attr content: "string"
+                @attr "id"
+                @attr "content"
 
-                @attr_accessible "content"
+                @attr_serialize "content"
                 
             app.config "app.models",
                 Blog: Blog

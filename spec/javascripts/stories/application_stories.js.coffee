@@ -39,7 +39,7 @@ feature "Application Bootstrapper", ->
             app.run( bootstrapper )
             
         Then "the application environment should be configured with the application models", ->
-            my_model = app.env.create( "my_model" )
+            my_model = app.env.create( "MyModel" )
             expect( my_model instanceof MyModel ).toBe true
             
     scenario "initialize the application modules", ->
