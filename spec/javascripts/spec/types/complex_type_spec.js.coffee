@@ -11,20 +11,20 @@ describe "core.types.ComplexType", ->
         env.defineSimpleType "string"
         
         fooTy = env.defineComplexType "foo",
-            attr:
+            attributes:
                 baz:
-                    ty_name: 'string'
+                    class_name: 'string'
                     accessible: true
             
         barTy = env.defineComplexType "bar",
-            attr:
+            attributes:
                 bar:
-                    ty_name: 'string'
+                    class_name: 'string'
                     accessible: true
                 foo:
-                    ty_name: 'foo'
+                    class_name: 'foo'
 
-    it "should have a 'tyName' property", ->
+    it "should have a 'class_name' property", ->
         expect(fooTy.tyName).toBe "foo"
 
     describe "serialize", ->
