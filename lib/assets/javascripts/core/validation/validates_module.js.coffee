@@ -1,5 +1,18 @@
 namespace "core", ->
 
+    errorsArray = ->
+        if ko?
+            errors = ko.observableArray([])
+        else
+            xs = []
+            errors = ->
+                if arguments.length == 0
+                    xs
+                else
+                    xs = arguments[0]
+            errors.push = (x) -> xs.push(x)
+        errors
+
     class ModelValidator
     
         constructor: ->
@@ -33,7 +46,7 @@ namespace "core", ->
                 @initialize_attribute( model, attr_name )
                 
         initialize_attribute: ( model, attribute_name ) ->
-            errors = if ko? then ko.observableArray([]) else []
+            errors = errorsArray()
             model[attribute_name].errors = errors
 
             is_valid = ( -> errors().length == 0 )
