@@ -4,6 +4,14 @@
     
         constructor: (@tyName, @tyDef, @propertyFactory) ->
             @kind = "complex"
+            
+        deserializePermissions: (data, target) ->
+            target.permissions ?= {}
+            for permission_name, has_permission of data
+                if target.permissions[permission_name]?
+                    target.permissions[permission_name](has_permission) 
+                else
+                    target.permissions[permission_name] = @propertyFactory.createProperty( has_permission )
         
         serialize: (obj, env, includeSpec, nested) ->
         
@@ -57,5 +65,7 @@
             
             for propName, propTyName of tyDef.attributes
                 deserializeField propName, propTyName 
+            
+            @deserializePermissions(data.permissions || { read: false, write: false }, target)
             
             target
