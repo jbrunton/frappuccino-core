@@ -2,6 +2,7 @@ namespace "core", ->
 
     class @Sandbox extends core.DependentObject
         @dependency mediator: "Mediator"
+        @dependency router: "Router"
         @dependency renderer: "Renderer"
         @dependency application: "Application"
         
