@@ -21,7 +21,7 @@ namespace "core.resources", ->
                     if params?
                         params += ","
                     else
-                        params = "includes="
+                        params = "include="
                     
                     if scope?
                         params += "#{scope}."
@@ -36,7 +36,7 @@ namespace "core.resources", ->
             params
             
         get_collection: (collection_name, opts) ->
-            includes = opts?.includes
+            includes = opts?.include
             success = opts?.success
             error = opts?.error
             action = opts?.action
@@ -54,7 +54,7 @@ namespace "core.resources", ->
                 dataType: 'json'
     
         get_resource: (collection_name, id, opts) ->
-            includes = opts?.includes
+            includes = opts?.include
             success = opts?.success
             error = opts?.error
         
