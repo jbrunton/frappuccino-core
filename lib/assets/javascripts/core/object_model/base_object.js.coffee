@@ -6,4 +6,4 @@ namespace "core", ->
             core.include( @, module )
             
         decorate: ->
-            core.decorate( arguments... )
+            core.decorate( @, arguments... )
