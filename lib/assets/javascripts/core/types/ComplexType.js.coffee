@@ -39,6 +39,27 @@
             
             data
             
+        initialize: (target, env, includeSpec) ->
+        
+            tyDef = @tyDef
+            includeSpec ?= {}
+        
+            initializeField = (propName, propDef) ->
+                propTyName = propDef.class_name
+                propTy = env.getType propTyName
+                propKind = propTy.kind # TODO: don't need this var
+                if includeSpec[propName]?
+                    if propKind == "list"
+                        target[propName]([])
+                    else if propDef.association
+                        propVal = env.create(propTyName, {})
+                        target[propName](propVal)
+                
+            for propName, propTyName of tyDef.attributes
+                initializeField propName, propTyName 
+                
+            target
+            
         deserialize: (data, env, target) ->
         
             target = target ?= env.create(@tyName)

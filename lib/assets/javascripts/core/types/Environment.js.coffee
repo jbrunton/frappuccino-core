@@ -46,6 +46,10 @@
             ty = @getType tyName
             ty.deserialize data, this, target
             
+        initialize: (tyName, target, includeSpec) ->
+            ty = @getType tyName
+            ty.initialize target, @, includeSpec
+            
         create: (tyName, data) ->
             tyClass = @_classes[tyName]
             if tyClass?

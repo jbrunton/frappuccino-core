@@ -73,6 +73,8 @@ namespace "core", ->
             
             @id(id)
             
+            @env.initialize( class_name, self, opts?.include )
+            
             success = (data) ->
                 env.deserialize( class_name, data, self )
                 opts?.success?( self )
