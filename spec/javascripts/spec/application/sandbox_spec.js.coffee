@@ -3,6 +3,7 @@ describe "core.Sandbox", ->
     container = null
 
     class Renderer
+    class Router
     app = {}
 
     beforeEach ->
@@ -10,6 +11,7 @@ describe "core.Sandbox", ->
             .register_class( "Sandbox", core.Sandbox )
             .register_instance( "Application", app )
             .register_class( "Renderer", Renderer )
+            .register_class( "Router", Router )
 
     describe "dependencies", ->
     
