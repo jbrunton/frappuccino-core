@@ -1,4 +1,4 @@
 --readme     README.md
 --title      "Frappuccino Documentation"
---output-dir ./doc
+--output-dir ./docs
 ./lib/assets/javascripts/core
