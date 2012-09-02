@@ -16,6 +16,9 @@ def generate_codo_docs
         puts "Copying docs/* to #{tmpdir_path}..."
         puts "cp -R ./docs #{tmpdir_path}"
         
+        puts "Deleting docs/ from master"
+        puts "rm -rf docs"
+        
         puts "Checking out gh-pages branch..."
         puts `git checkout gh-pages`
         
