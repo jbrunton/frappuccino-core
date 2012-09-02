@@ -30,6 +30,9 @@ def generate_codo_docs
         puts "Checking out gh-pages branch..."
         puts `git checkout gh-pages`
         
+        puts "Testing if docs/ directory exists..."
+        `mkdir #{original_dir}/docs` unless File.directory? "#{original_dir}/docs"
+        
         puts "Copying files back to docs/"
         puts `cp -R #{tmpdir_path}/* #{original_dir}/docs/`
         
