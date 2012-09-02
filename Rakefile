@@ -32,6 +32,14 @@ def generate_codo_docs
         
         puts "Copying files back to docs/"
         puts `cp -R #{tmpdir_path}/* #{original_dir}/docs/`
+        
+        puts "Staging files for commit..."
+        puts `git add #{original_dir}/docs`
+        
+        puts "The following files have been modified:"
+        puts `git status`
+        
+        puts "Please commit and push to origin/gh-pages to update docs"
     end    
     
 end
