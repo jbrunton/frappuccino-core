@@ -1,18 +1,14 @@
-namespace "core", ->
+namespace "core"
 
-    class @DependentModule
-    
-        constructor: ->
-            # @::_dependencies = @::_dependencies ?= {}
+# A module to facilitate the specification of dependencies.
+#
+# @mixin
+#
+class core.DependentModule
+
+    @dependency: (dependencies, optsFn) ->
+        @::dependencies ?= {}
+        
+        for dependency_name, dependency_type of dependencies
+            @::dependencies[dependency_name] = [dependency_type, optsFn]
             
-    
-        @dependency: (dependencies, optsFn) ->
-            @::_dependencies = @::_dependencies ?= {}
-            
-            # TODO: assert obj has one field?
-            
-            for dependency_name, dependency_type of dependencies
-                @::_dependencies[dependency_name] = [dependency_type, optsFn]
-                
-    class @DependentObject extends core.BaseObject
-        @include core.DependentModule

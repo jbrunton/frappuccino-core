@@ -87,7 +87,7 @@ class core.Container
             obj = new ref (opts ?= {})
             @resolve obj
         else if typeof ref == "object"
-            @_resolve_dependencies ref, ref._dependencies
+            @_resolve_dependencies ref, ref.dependencies
             ref
         else if @_parent?
             @_parent.resolve ref, opts
