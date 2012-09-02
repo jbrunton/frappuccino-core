@@ -19,7 +19,10 @@ def generate_codo_docs
         puts `ls -l #{original_dir}/docs`
         
         puts "Copying docs/* to #{tmpdir_path}..."
-        puts `cp -R #{original_dir}/docs #{tmpdir_path}`
+        puts `cp -R #{original_dir}/docs/* #{tmpdir_path}`
+        
+        puts "Contents of #{tmpdir_path}/ is:"
+        puts `ls -l #{tmpdir_path}`
         
         puts "Deleting docs/ from master"
         puts `rm -rf #{original_dir}/docs`
@@ -28,7 +31,7 @@ def generate_codo_docs
         puts `git checkout gh-pages`
         
         puts "Copying files back to docs/"
-        puts `cp -R #{tmpdir_path} #{original_dir}/docs/`
+        puts `cp -R #{tmpdir_path}/* #{original_dir}/docs/`
     end    
     
 end
