@@ -11,6 +11,6 @@ window.namespace = (scope, fn)->
     else
       if not ctx[outer].namespace?
         ctx[outer].namespace = window.namespace
-      fn.apply(ctx[outer], [])
+      fn.apply(ctx[outer], []) unless not fn?
 
   add_namespace scope.split("."), this
