@@ -23,8 +23,9 @@ class core.resources.HttpRepository
     # @example follows the recent_posts association (note: dependent on the implementation of gen_req_params):
     #   repository.resource_url( "users", 1, { recent_posts: true } ) # "/api/users/1?include=recent_posts"
     #
-    resource_url: (collection_name, id, includes, action) ->        
-        url = "/api/#{collection_name}/#{(id + '/') || ''}"
+    resource_url: (collection_name, id, includes, action) ->  
+        url = "/api/#{collection_name}/"
+        url += "#{id}/" unless not id?
         url += "#{action}/" unless not action?
         
         if includes?
