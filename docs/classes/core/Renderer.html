@@ -15,7 +15,7 @@
     &raquo;
     <span class='title'>core</span>
     &raquo;
-    <span class='title'>Container</span>
+    <span class='title'>Renderer</span>
     <nav>
       <ul>
         <li class='noframes'>
@@ -102,17 +102,17 @@
     <div id='content'>
       <h1>
         Class:
-        core.Container
+        core.Renderer
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>lib/assets/javascripts/core/container/container.js.coffee</td>
+          <td>lib/assets/javascripts/core/renderer/renderer.js.coffee</td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>Implementation of a DI container. </p> 
+  <p>Base class for a Renderer. </p> 
 </div>
 <div class='tags'>
 </div>
@@ -121,62 +121,82 @@
   <li>
     <span class='signature'>
       <a href='#constructor-instance'>
-        - (void) <strong>constructor</strong>(parent)
+        - (void) <strong>constructor</strong>()
       </a>
     </span>
     <span class='constructor note title'>Constructor</span>
     <span class='desc'>
-      Creates an instance of a container.
+      Instantiates a Renderer, using the config.renderer object for defaults, if available.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#register_class-instance'>
-        - (Container) <strong>register_class</strong>(name, klass, opts = {})
+      <a href='#register_template-instance'>
+        - (void) <strong>register_template</strong>(name, content)
       </a>
     </span>
     <span class='desc'>
-      Registers a class mapping with the container.
+      Registers a template with a given name.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#register_instance-instance'>
-        - (Container) <strong>register_instance</strong>(name, obj)
+      <a href='#bind_default_data-instance'>
+        - (void) <strong>bind_default_data</strong>(region_name, data)
       </a>
     </span>
     <span class='desc'>
-      Registers an instance mapping with the container.
+      Binds default data to a given region.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#_resolve_object-instance'>
-        - (void) <strong>_resolve_object</strong>(target)
+      <a href='#region-instance'>
+        - (Array) <strong>region</strong>(region_name)
       </a>
     </span>
     <span class='desc'>
-      Resolves dependencies on the target object.
+      Looks up and returns a region by name.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#resolve-instance'>
-        - (void) <strong>resolve</strong>(args...)
+      <a href='#regions-instance'>
+        - (Array) <strong>regions</strong>(el)
       </a>
     </span>
     <span class='desc'>
-      Returns an instance of the given dependency, resolving any child dependencies.
+      Returns the regions in a given jQuery-wrapped document element.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#child-instance'>
-        - (Container) <strong>child</strong>()
+      <a href='#region_name-instance'>
+        - (String) <strong>region_name</strong>(region)
       </a>
     </span>
     <span class='desc'>
-      Creates a child container.
+      Returns the name of the given region element.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render_region-instance'>
+        - (void) <strong>render_region</strong>(region, bindings)
+      </a>
+    </span>
+    <span class='desc'>
+      Renders a region with the given data/template bindings, then recursively renders any child regions.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#render_page-instance'>
+        - (void) <strong>render_page</strong>(template, data, bindings = {})
+      </a>
+    </span>
+    <span class='desc'>
+      Renders a page with the given template and data model.
     </span>
   </li>
 </ul>
@@ -184,34 +204,23 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='constructor-instance'>
-      - (void) <strong>constructor</strong>(parent)
+      - (void) <strong>constructor</strong>()
     </p>
     <div class='docstring'>
-  <p>Creates an instance of a container. </p> 
+  <p>Instantiates a Renderer, using the config.renderer object for defaults, if available. </p> 
 </div>
 <div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>parent</span>
-      <span class='type'>
-        (<tt><a href='../../classes/core/Container.html'>core.Container</a></tt>)
-      </span>
-      &mdash;
-      <span class='desc'>a parent container. When provided, if resolution of a dependency fails then resolution will be attempted with the parent container instead.</span>
-    </li>
-  </ul>
 </div>
   </div>
 </div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='register_class-instance'>
-      - (Container) <strong>register_class</strong>(name, klass, opts = {})
+    <p class='signature' id='register_template-instance'>
+      - (void) <strong>register_template</strong>(name, content)
     </p>
     <div class='docstring'>
-  <p>Registers a class mapping with the container. </p> 
+  <p>Registers a template with a given name. </p> 
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -222,191 +231,203 @@
         (<tt>String</tt>)
       </span>
       &mdash;
-      <span class='desc'>the name of the mapping to the class.</span>
+      <span class='desc'>the name of the template.</span>
     </li>
     <li>
-      <span class='name'>klass</span>
+      <span class='name'>content</span>
       <span class='type'>
-        (<tt>Class</tt>)
+        (<tt>?</tt>)
       </span>
       &mdash;
-      <span class='desc'>the class the dependency should resolve with.</span>
-    </li>
-  </ul>
-  <h3>
-    Options Hash:
-    (opts):
-  </h3>
-  <ul class='options'>
-    <li>
-      <span class='name'>singleton</span>
-      <span class='type'>
-        (<tt>Boolean</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>indicates whether the resolved dependency should be memoized.</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'>
-        (<tt>Container</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the container.</span>
+      <span class='desc'>the template content (type depends on concrete implementation).</span>
     </li>
   </ul>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='register_instance-instance'>
-      - (Container) <strong>register_instance</strong>(name, obj)
+    <p class='signature' id='bind_default_data-instance'>
+      - (void) <strong>bind_default_data</strong>(region_name, data)
     </p>
     <div class='docstring'>
-  <p>Registers an instance mapping with the container. </p> 
+  <p>Binds default data to a given region. </p> 
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>name</span>
+      <span class='name'>region_name</span>
       <span class='type'>
         (<tt>String</tt>)
       </span>
       &mdash;
-      <span class='desc'>the name of the mapping to the instance.</span>
+      <span class='desc'>the name of the region.</span>
     </li>
     <li>
-      <span class='name'>obj</span>
+      <span class='name'>data</span>
       <span class='type'>
         (<tt>Object</tt>)
       </span>
       &mdash;
-      <span class='desc'>the instance the dependency should resolve to.</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'>
-        (<tt>Container</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the container.</span>
+      <span class='desc'>the data to bind.</span>
     </li>
   </ul>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='_resolve_object-instance'>
-      - (void) <strong>_resolve_object</strong>(target)
+    <p class='signature' id='region-instance'>
+      - (Array) <strong>region</strong>(region_name)
     </p>
     <div class='docstring'>
-  <p>Resolves dependencies on the target object. </p> 
+  <p>Looks up and returns a region by name. </p> 
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>target</span>
-      <span class='type'>
-        (<tt>Object</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the target object.</span>
-    </li>
-  </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='resolve-instance'>
-      - (Object) <strong>resolve</strong>(name) Resolves the dependency according to the name of the mapping.
-      <br>
-      - (Container) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>Returns an instance of the given dependency, resolving any child dependencies. </p> 
-</div>
-<div class='tags'>
-  <div class='overloads'>
-    <h3>Overloads:</h3>
-    <div class='overload'>
-      <p class='signature'>
-        - (Object) <strong>resolve</strong>(name) Resolves the dependency according to the name of the mapping.
-      </p>
-      <div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>name</span>
+      <span class='name'>region_name</span>
       <span class='type'>
         (<tt>String</tt>)
       </span>
       &mdash;
-      <span class='desc'>the name of the dependency mapping.</span>
+      <span class='desc'>the name of the region.</span>
     </li>
   </ul>
   <h3>Returns:</h3>
   <ul class='return'>
     <li>
       <span class='type'>
-        (<tt>Object</tt>)
+        (<tt>Array</tt>)
       </span>
       &mdash;
-      <span class='desc'>the fully resolved dependency.</span>
+      <span class='desc'>the jQuery array of matching elements.</span>
     </li>
   </ul>
-</div>
-    </div>
-    <div class='overload'>
-      <p class='signature'>
-        - (Container) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
-      </p>
-      <div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>target</span>
-      <span class='type'>
-        (<tt>Object</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>the object to resolve dependencies for.</span>
-    </li>
-  </ul>
-  <h3>Returns:</h3>
-  <ul class='return'>
-    <li>
-      <span class='type'>
-        (<tt>Container</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>target.</span>
-    </li>
-  </ul>
-</div>
-    </div>
-  </div>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='child-instance'>
-      - (Container) <strong>child</strong>()
+    <p class='signature' id='regions-instance'>
+      - (Array) <strong>regions</strong>(el)
     </p>
     <div class='docstring'>
-  <p>Creates a child container. </p> 
+  <p>Returns the regions in a given jQuery-wrapped document element. </p> 
 </div>
 <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>el</span>
+      <span class='type'>
+        (<tt>Element</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the element to search within.</span>
+    </li>
+  </ul>
   <h3>Returns:</h3>
   <ul class='return'>
     <li>
       <span class='type'>
-        (<tt>Container</tt>)
+        (<tt>Array</tt>)
       </span>
       &mdash;
-      <span class='desc'>a new child container.</span>
+      <span class='desc'>a jQuery array of matching elements.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='region_name-instance'>
+      - (String) <strong>region_name</strong>(region)
+    </p>
+    <div class='docstring'>
+  <p>Returns the name of the given region element. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>region</span>
+      <span class='type'>
+        (<tt>Element</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the region.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the region.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render_region-instance'>
+      - (void) <strong>render_region</strong>(region, bindings)
+    </p>
+    <div class='docstring'>
+  <p>Renders a region with the given data/template bindings, then recursively renders any child regions. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>region</span>
+      <span class='type'>
+        (<tt>Element</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the document region to render.</span>
+    </li>
+    <li>
+      <span class='name'>bindings</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>an object specifying the binding mappings.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='render_page-instance'>
+      - (void) <strong>render_page</strong>(template, data, bindings = {})
+    </p>
+    <div class='docstring'>
+  <p>Renders a page with the given template and data model. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>template</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the template to render the 'content' region.</span>
+    </li>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the data model for the 'content' region.</span>
+    </li>
+    <li>
+      <span class='name'>bindings</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>any further data bindings (e.g. for other regions).</span>
     </li>
   </ul>
 </div>

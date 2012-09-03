@@ -15,7 +15,7 @@
     &raquo;
     <span class='title'>core</span>
     &raquo;
-    <span class='title'>DependentModule</span>
+    <span class='title'>EventsModule</span>
     <nav>
       <ul>
         <li class='noframes'>
@@ -102,17 +102,17 @@
     <div id='content'>
       <h1>
         Class:
-        core.DependentModule
+        core.EventsModule
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>lib/assets/javascripts/core/container/dependent_module.js.coffee</td>
+          <td>lib/assets/javascripts/core/events/events_module.js.coffee</td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>A module to facilitate the specification of dependencies. </p> 
+  <p>Provides convenience methods @on and publish for subscribing and publishing to application events with AER. </p> 
 </div>
 <div class='tags'>
 </div>
@@ -120,22 +120,89 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#dependency-class'>
-        + (void) <strong>dependency</strong>(dependencies, optsFn)
+      <a href='#on-class'>
+        + (void) <strong>on</strong>(event, handler)
       </a>
     </span>
     <span class='desc'>
-      
+      Generates a named event handler for AER.
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#publish-instance'>
+        - (void) <strong>publish</strong>(event, args)
+      </a>
+    </span>
+    <span class='desc'>
+      Publishes an event through the sandbox.
     </span>
   </li>
 </ul>
       <h2>Class Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='dependency-class'>
-      + (void) <strong>dependency</strong>(dependencies, optsFn)
+    <p class='signature' id='on-class'>
+      + (void) <strong>on</strong>(event, handler)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Generates a named event handler for AER. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>event</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the event.</span>
+    </li>
+    <li>
+      <span class='name'>handler</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the event handler.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='publish-instance'>
+      - (void) <strong>publish</strong>(event, args)
+    </p>
+    <div class='docstring'>
+  <p>Publishes an event through the sandbox. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>event</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the event.</span>
+    </li>
+    <li>
+      <span class='name'>args</span>
+      <span class='type'>
+        (<tt>Array</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the arguments to pass to the handler.</span>
+    </li>
+  </ul>
 </div>
   </div>
 </div>

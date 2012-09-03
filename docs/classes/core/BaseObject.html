@@ -15,7 +15,7 @@
     &raquo;
     <span class='title'>core</span>
     &raquo;
-    <span class='title'>DependentModule</span>
+    <span class='title'>BaseObject</span>
     <nav>
       <ul>
         <li class='noframes'>
@@ -102,40 +102,87 @@
     <div id='content'>
       <h1>
         Class:
-        core.DependentModule
+        core.BaseObject
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>lib/assets/javascripts/core/container/dependent_module.js.coffee</td>
+          <td>lib/assets/javascripts/core/object_model/base_object.js.coffee</td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>A module to facilitate the specification of dependencies. </p> 
+  <p>Implements convenience methods to include mixins and decorate instances. </p> 
 </div>
 <div class='tags'>
 </div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+                <a href='../../classes/core/DependentObject.html'>core.DependentObject</a>,
+                <a href='../../classes//Model.html'>.Model</a>,
+                <a href='../../classes/Foo.html'>Foo</a>,
+        <a href='../../classes/Bar.html'>Bar</a>
+      </p>
       <h2>Class Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#dependency-class'>
-        + (void) <strong>dependency</strong>(dependencies, optsFn)
+      <a href='#include-class'>
+        + (void) <strong>include</strong>(module)
       </a>
     </span>
     <span class='desc'>
-      
+      Static method to include a module into a class.
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#decorate-instance'>
+        - (void) <strong>decorate</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Decorates an instance with the given decorator.
     </span>
   </li>
 </ul>
       <h2>Class Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='dependency-class'>
-      + (void) <strong>dependency</strong>(dependencies, optsFn)
+    <p class='signature' id='include-class'>
+      + (void) <strong>include</strong>(module)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Static method to include a module into a class. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>module</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the module to include.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='decorate-instance'>
+      - (void) <strong>decorate</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Decorates an instance with the given decorator. </p> 
+</div>
+<div class='tags'>
 </div>
   </div>
 </div>
