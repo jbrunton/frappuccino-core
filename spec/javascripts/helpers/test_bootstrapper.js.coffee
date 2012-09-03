@@ -12,7 +12,7 @@ namespace "test_helper", ->
                 container.register_class "Renderer", {}, singleton: true
                 container.register_class "Router", {}, singleton: true
                 container.register_class "PropertyFactory", core.types.SimplePropertyFactory, singleton: true
-                container.register_class "ModelRepository", core.resources.LocalResourceHandler, singleton: true
+                container.register_class "ModelRepository", core.resources.LocalMemoryRepository, singleton: true
     
                 # TODO: move this to a resources controller which reads from the api feed
                 env = container.resolve "Environment"

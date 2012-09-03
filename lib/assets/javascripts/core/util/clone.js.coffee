@@ -1,6 +1,11 @@
-namespace "core.util", ->
-    
-    @clone = (obj) ->
+namespace "core.util",
+
+# Returns a deep copy of the given object or Date.
+#
+# @param obj [Object] the object to copy.
+# @return [Object] a new copy of the object.
+#
+core.clone = (obj) ->
     
         if not obj? or typeof obj isnt 'object'
             return obj

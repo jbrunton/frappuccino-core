@@ -1,6 +1,6 @@
-describe "core.resources.LocalResourceHandler", ->
+describe "core.resources.LocalMemoryRepository", ->
 
-    db = new core.resources.LocalResourceHandler
+    db = new core.resources.LocalMemoryRepository
 
     it "stores records in memory", ->
     
