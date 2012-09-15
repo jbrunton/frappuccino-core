@@ -178,8 +178,11 @@ class core.ValidatesModule
     #
     is_valid: ->
         model = @
-        _.every @model_validator.enum_attributes(),
-            ( attr ) -> model[attr].is_valid()            
+        if @model_validator?
+            _.every @model_validator.enum_attributes(),
+                ( attr ) -> model[attr].is_valid()            
+        else
+            true
     
     
     constructor: ->
