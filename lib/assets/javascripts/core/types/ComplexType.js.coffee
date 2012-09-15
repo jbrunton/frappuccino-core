@@ -52,8 +52,9 @@
                     if propKind == "list"
                         target[propName]([])
                     else if propDef.association
-                        propVal = env.create(propTyName, {})
+                        propVal = env.create(propTyName)
                         target[propName](propVal)
+                        propTy.initialize(target[propName](), env, includeSpec[propName])
                 
             for propName, propTyName of tyDef.attributes
                 initializeField propName, propTyName 

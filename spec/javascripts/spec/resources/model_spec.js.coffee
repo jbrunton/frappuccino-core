@@ -108,3 +108,5 @@ describe "core.Model", ->
             
             # TODO: this is not really a unit test - make a feature test instead, maybe?
             # expect( Blog::validators ).toContain( jasmine.any(core.validators.PresenceValidator) )
+
+            

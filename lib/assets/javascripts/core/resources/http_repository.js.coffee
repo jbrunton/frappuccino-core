@@ -38,34 +38,22 @@ class core.resources.HttpRepository
     # Generates query params to follow the given associations on the server and include them in the
     # response.
     #
-    # @param includes [Object] a tree representing the associations.
+    # @param associations [Object] a tree representing the associations.
     # @return [String] the query param.
     #
     # @example
-    #   repository.gen_req_params( blogs: { blog_posts: true } ) # "include=blogs,blogs.posts"
+    #   repository.gen_req_params( user, blogs: { blog_posts: true } ) # "include=user,blogs.blog_posts"
     #
-    gen_req_params: (includes) ->
-        params = null
-        
-        build_params = (includes, scope) ->
-        
-            for assoc_name, value of includes
-                if params?
-                    params += ","
+    gen_req_params: ( associations ) ->
+        build_params = ( associations ) ->
+            ( for name, value of associations
+                if value == true
+                    name
                 else
-                    params = "include="
-                
-                if scope?
-                    params += "#{scope}."
-
-                params += assoc_name
-                
-                build_params( value, assoc_name )
+                    "#{name}.#{build_params(value)}" ).join(",")
         
-        if includes?
-            build_params( includes, null )
-    
-        params
+        if associations?
+            "include=#{build_params(associations)}"
     
     
     # Generates a GET request to read from the given collection.
