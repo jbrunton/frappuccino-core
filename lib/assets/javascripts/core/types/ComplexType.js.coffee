@@ -17,22 +17,29 @@
         
             data = {}
             tyDef = @tyDef
-            includeSpec ?= {}
             
             serializeField = (propName, propDef) ->
                 propTyName = propDef.class_name
                 propTy = env.getType propTyName
                 propKind = propTy.kind # TODO: don't need this var
-                include = propDef.serialize? || includeSpec[propName]? || ( propDef.primary_key && nested )
+                if propDef.primary_key && nested
+                    include = true
+                else if includeSpec?
+                    include = includeSpec[propName]?
+                else
+                    include = propDef.serialize?
                 
                 if include
                     prop = obj[propName]
                     propVal = prop() unless not prop
                     
+                    if includeSpec?
+                        propIncludeSpec = ( includeSpec[propName] || {} )
+
                     if propDef.association
-                        propName = "#{propName}_attributes"
+                        propName = "#{propName}_attributes"                        
                     
-                    data[propName] = propTy.serialize propVal, env, includeSpec[propName], true
+                    data[propName] = propTy.serialize propVal, env, propIncludeSpec, true
             
             for propName, propTyName of tyDef.attributes
                 serializeField propName, propTyName

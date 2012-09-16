@@ -112,7 +112,7 @@ namespace "core", ->
         # Recursively serializes the model and the specified associations, returning a JSON representation of it.
         #
         serialize: (opts) ->
-            @env.serialize @class_name, @, opts?.includes
+            @env.serialize @class_name, @, opts?.include
             
 
         # Recursively deserializes the model and the specified associations, returning a reference to the model.

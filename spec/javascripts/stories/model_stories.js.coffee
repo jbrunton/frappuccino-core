@@ -44,16 +44,41 @@ feature "core.Model", ->
             #expect( my_model.env ).toBe app.env
             
         And "the serialize method should serialize accessible attributes by default", ->
-            blog = new Blog( title: "blog title" )
-            expect( blog.serialize() ).toEqual( title: "blog title" )
+            blog = new Blog
+                title: "blog title"
+
+            expected_json =
+                title: "blog title"
+            
+            expect( blog.serialize() ).toEqual( expected_json )
             
         And "the serialize method should follow accessible associations", ->
         
-            blog = new Blog( title: "blog title", blog_posts: [ content: "some example content" ] )
-            expect( blog.serialize() ).toEqual( title: "blog title", blog_posts_attributes: [ content: "some example content" ] )
+            blog = new Blog
+                title: "blog title"
+                blog_posts: [ content: "some example content" ]
+                
+            expected_json =
+                title: "blog title"
+                blog_posts_attributes: [ content: "some example content" ]
+
+            expect( blog.serialize() ).toEqual( expected_json )
             
         And "the serialize method should include primary keys for nested associations", ->
-            blog = new Blog( id: 1, title: "blog title", blog_posts: [ id: 2, content: "some example content" ] )
-            expect( blog.serialize() ).toEqual( title: "blog title", blog_posts_attributes: [ id: 2, content: "some example content" ] )
+            blog = new Blog
+                id: 1
+                title: "blog title"
+                blog_posts: [ id: 2, content: "some example content" ]
+                
+            expected_json =
+                title: "blog title"
+                blog_posts_attributes: [ id: 2, content: "some example content" ]
+
+            expect( blog.serialize() ).toEqual( expected_json )
             
             #expect( blog.serialize() ).toEqual( blog_posts: [ id: 1, content: "some example content" ] )
+            
+        And "the serialize method should only include specified attributes, if provided", ->
+            blog = new Blog( id: 1, title: "blog title", blog_posts: [ id: 2, content: "some example content" ] )
+            expect( blog.serialize( include: { blog_posts: { content: true } } ) ).toEqual( blog_posts_attributes: [ content: "some example content" ] )
+            
