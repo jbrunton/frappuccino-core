@@ -94,7 +94,7 @@ class core.Container
     # @overLoad resolve(target, opts)
     #   Resolves any unresolved dependencies on a given object.
     #   @param target [Object] the object to resolve dependencies for.
-    #   @return [Container] target.
+    #   @return [Object] target.
     # 
     resolve: (args...) ->
         [ref, opts] = args

@@ -1,51 +1,59 @@
 describe "core.Container", ->
 
     container = null
+    
+    class Person extends core.DependentObject
+        constructor: ( @name ) ->
 
     beforeEach ->
         container = new core.Container
     
     it "resolves registered instances", ->
-        my_object = new Object
-        container.register_instance "object", my_object
+        fred = { name: "Fred" }
+        container.register_instance "fred", fred
         
-        expect( container.resolve "object" ).toBe my_object
+        expect( container.resolve "fred" ).toBe fred
         
     it "resolves registered classes", ->
-        class MyClass
-        container.register_class "MyClass", MyClass
+        container.register_class "Person", Person
         
-        expect( container.resolve( "MyClass" ) instanceof MyClass ).toBeTruthy()
+        fred = container.resolve( "Person", "Fred" )
+        expect( fred instanceof Person ).toBeTruthy()
+        expect( fred.name ).toEqual( "Fred" )
         
     it "resolves classes registered as singletons to the same instance", ->
-        class MyClass
-        container.register_class "MyClass", MyClass, singleton: true
+        container.register_class "POTUS", Person, singleton: true
         
-        expect( container.resolve "MyClass" ).toBe( container.resolve "MyClass" )        
+        expect( container.resolve "POTUS" ).toBe( container.resolve "POTUS" )        
         
     it "resolves nested dependencies", ->
-        class MyClass extends core.DependentObject
-            @dependency object: "object"
+        class PersonWithHat extends Person
+            constructor: ( name ) -> super( name )
+            @dependency hat: "Hat"
             
-        my_object = new Object
+        trilby = { type: "trilby" }
 
-        container.register_instance "object", my_object
-        container.register_class "MyClass", MyClass
+        container.register_instance "Hat", trilby
+        container.register_class "PersonWithHat", PersonWithHat
         
-        my_instance = container.resolve "MyClass"
+        fred = container.resolve "PersonWithHat", "Fred"
         
-        expect( my_instance instanceof MyClass ).toBeTruthy()
-        expect( my_instance.object ).toBe my_object
+        expect( fred instanceof PersonWithHat ).toBeTruthy()
+        expect( fred.hat ).toBe trilby
 
     it "should resolve dependencies defined by deferred functions", ->
-        class MyClass extends core.DependentObject
-            @dependency object: -> my_object
+        class Passport
+            constructor: ( @belongs_to ) ->
             
-        my_object = new Object
+        class PersonWithPassport extends Person
+            constructor: ( name ) -> super( name )
+            @dependency passport: ( container ) ->
+                container.resolve( "Passport", @ )
+            
+        container.register_class "PersonWithPassport", PersonWithPassport
+        container.register_class "Passport", Passport
         
-        container.register_instance "object", my_object
-        container.register_class "MyClass", MyClass
-        
-        my_instance = container.resolve "MyClass"
-        
-        expect( my_instance.object ).toBe my_object
+        fred = container.resolve( "PersonWithPassport", "Fred" )
+
+        expect( fred.passport instanceof Passport ).toBeTruthy()
+        expect( fred.passport.belongs_to ).toBe fred
