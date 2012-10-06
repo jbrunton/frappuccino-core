@@ -78,7 +78,7 @@ feature "core.Model", ->
             
             #expect( blog.serialize() ).toEqual( blog_posts: [ id: 1, content: "some example content" ] )
             
-        And "the serialize method should only include specified attributes, if provided", ->
+        And "the serialize method should only include specified attributes (if provided), and primary keys", ->
             blog = new Blog( id: 1, title: "blog title", blog_posts: [ id: 2, content: "some example content" ] )
-            expect( blog.serialize( include: { blog_posts: { content: true } } ) ).toEqual( blog_posts_attributes: [ content: "some example content" ] )
+            expect( blog.serialize( include: { blog_posts: { content: true } } ) ).toEqual( blog_posts_attributes: [ id: 2, content: "some example content" ] )
             

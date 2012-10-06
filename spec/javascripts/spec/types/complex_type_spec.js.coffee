@@ -46,9 +46,10 @@ describe "core.types.ComplexType", ->
             
         it "should serialize complex types referenced in 'includeSpecs'", ->
             data = barTy.serialize obj, env,
-                foo: true
+                foo:
+                    baz: true
                 
-            expect(data.bar).toBe "bar"
+            expect(data.bar).toBeUndefined()
             expect(data.foo.baz).toBe "baz"
             
     describe "deserialize", ->
