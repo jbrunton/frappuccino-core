@@ -29,17 +29,19 @@ describe "core.Container", ->
     it "resolves nested dependencies", ->
         class PersonWithHat extends Person
             constructor: ( name ) -> super( name )
-            @dependency hat: "Hat"
+            @dependency hat: "Hat", "trilby"
             
-        trilby = { type: "trilby" }
+        class Hat
+            constructor: ( @type ) ->
 
-        container.register_instance "Hat", trilby
+        container.register_class "Hat", Hat
         container.register_class "PersonWithHat", PersonWithHat
         
         fred = container.resolve "PersonWithHat", "Fred"
         
         expect( fred instanceof PersonWithHat ).toBeTruthy()
-        expect( fred.hat ).toBe trilby
+        expect( fred.hat instanceof Hat ).toBeTruthy()
+        expect( fred.hat.type ).toEqual( "trilby" )
 
     it "should resolve dependencies defined by deferred functions", ->
         class Passport
@@ -57,3 +59,25 @@ describe "core.Container", ->
 
         expect( fred.passport instanceof Passport ).toBeTruthy()
         expect( fred.passport.belongs_to ).toBe fred
+        
+    it "should resolve dependencies defined by factory methods", ->
+        propertyFactoryFunction = ( initVal ) ->
+            val = initVal
+            ->  if arguments.length == 0
+                    val
+                else
+                    val = arguments[0]
+                    @
+
+        container.register_factory "Property", propertyFactoryFunction
+        
+        class PersonWithBag extends Person
+            @dependency bag: "Property", "Gucci"
+            
+        container.register_class "PersonWithBag", PersonWithBag
+            
+        #fred = container.resolve "PersonWithBag", "Fred"
+        #expect( fred.name() ).toEqual( "Fred" )
+        
+        #fred.name( "Freddy" )
+        #expect( fred.name() ).toEqual( "Freddy" )

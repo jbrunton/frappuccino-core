@@ -19,11 +19,15 @@ class core.Container
     # @private
     #        
     _resolve_dependencies: (target, properties) ->
-        for name, [dependency, optsFn] of properties
+        for name, [dependency, dependency_args...] of properties
             if typeof dependency == "function"
                 target[name] = dependency.apply(target, [@])
             else
-                target[name] = @resolve dependency, optsFn?.apply(target, [@])
+                if typeof dependency_args[0] == "function"
+                    [optsFn, args...] = dependency_args
+                    target[name] = @resolve dependency, optsFn?.apply(target, [@, args...])
+                else
+                    target[name] = @resolve dependency, dependency_args...
         target
 
     # Registers a class mapping with the container.
@@ -47,6 +51,17 @@ class core.Container
     register_instance: (name, obj) ->
         @_register_mapping name, obj, "instance"
         @
+        
+
+    # Registers a factory function for resolving dependencies
+    #
+    # @param name [String] the name of the mapping
+    # @param fn [Function] the factory function to resolve the mapping
+    # @return [Container] the container
+    #
+    register_factory: (name, fn) ->
+        @_register_mapping name, fn, "factory"
+        @
 
 
     # Resolves a dependency by name.
@@ -63,6 +78,8 @@ class core.Container
         else if mapping.kind == "class" and mapping.singleton == true
             mapping.instance = @resolve( mapping.ref, opts ) unless mapping.instance?
             mapping.instance
+        else if mapping.kind == "factory"
+            mapping.ref.apply(null, opts)
         else
             @resolve( mapping.ref, opts )
 
