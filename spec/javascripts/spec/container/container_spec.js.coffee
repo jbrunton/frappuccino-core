@@ -17,31 +17,35 @@ describe "core.Container", ->
     it "resolves registered classes", ->
         container.register_class "Person", Person
         
-        fred = container.resolve( "Person", "Fred" )
+        fred = container.resolve "Person", ["Fred"]
         expect( fred instanceof Person ).toBeTruthy()
         expect( fred.name ).toEqual( "Fred" )
         
     it "resolves classes registered as singletons to the same instance", ->
         container.register_class "POTUS", Person, singleton: true
         
-        expect( container.resolve "POTUS" ).toBe( container.resolve "POTUS" )        
+        obama = container.resolve "POTUS", ["Barack Obama"]
+        expect( container.resolve "POTUS" ).toBe( obama )
         
     it "resolves nested dependencies", ->
         class PersonWithHat extends Person
             constructor: ( name ) -> super( name )
-            @dependency hat: "Hat", "trilby"
+            @dependency hat: "Hat", "trilby", "black"
             
         class Hat
-            constructor: ( @type ) ->
+            constructor: ( @type, @color ) ->
 
         container.register_class "Hat", Hat
         container.register_class "PersonWithHat", PersonWithHat
         
-        fred = container.resolve "PersonWithHat", "Fred"
+        hat = container.resolve "Hat", ["trilby", "black"]
+        
+        fred = container.resolve "PersonWithHat", ["Fred"]
         
         expect( fred instanceof PersonWithHat ).toBeTruthy()
         expect( fred.hat instanceof Hat ).toBeTruthy()
         expect( fred.hat.type ).toEqual( "trilby" )
+        expect( fred.hat.color ).toEqual( "black" )
 
     it "should resolve dependencies defined by deferred functions", ->
         class Passport
@@ -50,12 +54,12 @@ describe "core.Container", ->
         class PersonWithPassport extends Person
             constructor: ( name ) -> super( name )
             @dependency passport: ( container ) ->
-                container.resolve( "Passport", @ )
+                container.resolve "Passport", [@]
             
         container.register_class "PersonWithPassport", PersonWithPassport
         container.register_class "Passport", Passport
         
-        fred = container.resolve( "PersonWithPassport", "Fred" )
+        fred = container.resolve "PersonWithPassport", ["Fred"]
 
         expect( fred.passport instanceof Passport ).toBeTruthy()
         expect( fred.passport.belongs_to ).toBe fred

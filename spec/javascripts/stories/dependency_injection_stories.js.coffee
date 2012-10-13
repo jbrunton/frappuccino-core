@@ -1,69 +1,78 @@
 #= require helpers/test_bootstrapper
 
-
-# Dependency Injection
-# --------------------
-
 feature "Dependency Injection", ->
 
-
-    # Dependency injection (DI) allows class implementations to be be decoupled from their
-    # dependencies, which greatly facilitates testing and the sharing of code across different
-    # platforms and environments - as the DI container can be configured differently with
-    # appropriate concrete implementations of each class in each different use case.
-        
     summary(
         'As a client of the framework',
         'I want to specify dependencies to be resolved at runtime'
     )
 
+    class Hat
+        constructor: ( @type = "trilby", @color = "black" ) ->
 
-    # The DI container is typically used to resolve dependencies specified on classes which inherit
-    # from `core.DependentObject`, which implements the static method `dependency`.
-
-    class Sedan extends core.DependentObject
-        @dependency repository: "HttpRepository"
-        @dependency driver: "Driver"
-
-
-    # The concrete classes used for this test suite.
-
-    class HttpRepository
-    class Driver
-
-    scenario "Specify a class as a dependency", ->
+    class Person extends core.DependentObject
+        @dependency hat: "Hat"
+        constructor: ( @name ) ->
+        
+        
+    create_container = ( mappings ) ->
+        container = new core.Container
+        for name, klass of mappings
+            container.register_class name, klass
+        container
+        
+        
+    scenario "Resolve dependency properties", ->
     
-        container = driver = null
+        container = fred = null
     
         Given "I have a container with a class mapping registered", ->
-            container = new core.Container
-            
-            # 
-            container.register_class "Driver", Driver
+            container = create_container "Hat": Hat, "Person": Person
     
         When "I resolve a new instance of the mapping with the container", ->
-            driver = container.resolve( "Driver" )
+            fred = container.resolve "Person", ["Fred"]
     
         Then "the container should resolve an instance of the class", ->
-            expect( driver instanceof Driver ).toBeTruthy()
+            expect( fred instanceof Person ).toBeTruthy()
             
-        And "each call to resolve another class instantiates a new instance", ->
-            expect( container.resolve( "Driver" ) ).not.toBe( driver )
+        And "any dependency properties should be resolved", ->
+            expect( fred.hat instanceof Hat ).toBeTruthy()
             
-    scenario "Specify a singleton class as a dependency", ->
+    scenario "Provide arguments to dependency properties", ->
     
-        container = repository = null
+        container = queen = null
+        
+        class Queen extends core.DependentObject
+            @dependency crown: "Hat", "crown", "gold"
         
         Given "I have a container with a singleton class mapping", ->
-            container = new core.Container
-            container.register_class "Repository", HttpRepository, singleton: true
+            container = create_container "Hat": Hat, "Queen": Queen
             
-        When "I resolve an instance of the class", ->
-            repository = container.resolve( "Repository" )
+        When "I resolve an instance of the mapping", ->
+            queen = container.resolve "Queen", ["Elizabeth"]
             
-        Then "the container should resolve an instance of the class", ->
-            expect( repository instanceof HttpRepository ).toBeTruthy()
+        Then "any dependency properties should be resolved", ->
+            expect( queen.crown instanceof Hat ).toBeTruthy()
             
-        And "the container resolves to the same instance each time", ->
-            expect( container.resolve( "Repository" ) ).toBe( repository )
+        And "resolved dependencies should be passed the given arguments when resolved", ->
+            expect( queen.crown.type ).toBe( "crown" )
+            expect( queen.crown.color ).toBe( "gold" )
             
+    
+    scenario "Provide constructor to dependency properties", ->
+    
+        container = queen = null
+        
+        class Queen extends core.DependentObject
+            @dependency heir: (container) ->
+                container.resolve "Person", ["William"]
+        
+        Given "I have a container", ->
+            container = create_container "Hat": Hat, "Queen": Queen, "Person": Person
+            
+        When "I resolve the mapping", ->
+            queen = container.resolve "Queen", ["Elizabeth"]
+            
+        Then "any dependency properties specified by a constructor function should be resolved", ->
+            expect( queen.heir instanceof Person ).toBeTruthy()
+            expect( queen.heir.name ).toBe( "William" )           

@@ -57,7 +57,7 @@ describe "core.Sandbox", ->
     
             it "implicitly scopes published events according to the name of the sandbox module", ->
                 my_module = name: "MyModule"
-                sandbox = container.resolve "Sandbox", my_module
+                sandbox = container.resolve "Sandbox", [my_module]
                 sandbox.publish( "event" )
                 
                 expect( mediator.publish ).toHaveBeenCalledWith( "MyModule.event" )

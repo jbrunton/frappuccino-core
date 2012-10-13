@@ -16,7 +16,7 @@ describe "core.ApplicationModule", ->
 
 
     it "should have a name", ->
-        app_module = container.resolve "ApplicationModule", "MyModule"
+        app_module = container.resolve "ApplicationModule", ["MyModule"]
         expect( app_module.name ).toBe "MyModule"
         
     describe "dependencies", ->

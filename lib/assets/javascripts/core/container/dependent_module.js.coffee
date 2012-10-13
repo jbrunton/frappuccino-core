@@ -6,9 +6,9 @@ namespace "core"
 #
 class core.DependentModule
 
-    @dependency: (dependencies, optsFn) ->
+    @dependency: (dependencies, args...) ->
         @::dependencies ?= {}
         
         for dependency_name, dependency_type of dependencies
-            @::dependencies[dependency_name] = [dependency_type, optsFn]
+            @::dependencies[dependency_name] = [dependency_type, args]
             

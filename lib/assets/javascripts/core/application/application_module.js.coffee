@@ -3,7 +3,8 @@ namespace "core", ->
     class @ApplicationModule extends core.EventObject    
         constructor: (@name) ->
         
-        @dependency sandbox: "Sandbox", -> @
+        @dependency sandbox: (container) ->
+            container.resolve "Sandbox", [@]
         @dependency env: "Environment"
         
         @dependency container: (container) ->

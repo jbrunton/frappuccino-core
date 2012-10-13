@@ -19,15 +19,12 @@ class core.Container
     # @private
     #        
     _resolve_dependencies: (target, properties) ->
-        for name, [dependency, dependency_args...] of properties
+        for name, args of properties
+            [dependency, dependency_args] = args
             if typeof dependency == "function"
                 target[name] = dependency.apply(target, [@])
             else
-                if typeof dependency_args[0] == "function"
-                    [optsFn, args...] = dependency_args
-                    target[name] = @resolve dependency, optsFn?.apply(target, [@, args...])
-                else
-                    target[name] = @resolve dependency, dependency_args...
+                target[name] = @resolve dependency, dependency_args
         target
 
     # Registers a class mapping with the container.
@@ -91,7 +88,7 @@ class core.Container
     #
     _resolve_function: ( fn, opts ) ->
         opts ?= {}
-        obj = new fn( opts )
+        obj = new fn( opts... )
         @resolve obj
         
     # Resolves dependencies on the target object.
@@ -113,8 +110,7 @@ class core.Container
     #   @param target [Object] the object to resolve dependencies for.
     #   @return [Object] target.
     # 
-    resolve: (args...) ->
-        [ref, opts] = args
+    resolve: (ref, opts) ->
         if typeof ref == "string"
             resolution = @_resolve_string( ref, opts )
         else if typeof ref == "function"
