@@ -87,7 +87,7 @@ class core.Container
     # @param 
     #
     _resolve_function: ( fn, opts ) ->
-        opts ?= {}
+        opts ?= []
         obj = new fn( opts... )
         @resolve obj
         
