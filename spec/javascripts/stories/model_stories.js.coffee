@@ -97,7 +97,7 @@ feature "core.Model", ->
                 
             expected_json =
                 title: "blog title"
-                blog_posts_attributes: [ id: 2, content: "some example content", _destroy: true ]
+                blog_posts_attributes: [ id: 2, content: "some example content", _destroy: 1 ]
             
             blog.blog_posts()[0].destroy()
             
