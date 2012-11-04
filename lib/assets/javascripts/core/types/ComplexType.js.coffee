@@ -43,6 +43,9 @@
             
             for propName, propTyName of tyDef.attributes
                 serializeField propName, propTyName
+                
+            if obj._destroy and obj._destroy()
+                data._destroy = 1
             
             data
             

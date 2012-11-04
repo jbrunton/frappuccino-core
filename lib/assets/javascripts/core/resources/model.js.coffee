@@ -100,6 +100,7 @@ namespace "core", ->
         constructor: (data, @env) ->
             @env ?= core.Model.default_env
             @deserialize(data || {})
+            @_destroy = @env.propertyFactory.createProperty(false)
             @initialize_validator()
 
 
@@ -201,3 +202,7 @@ namespace "core", ->
         #
         refresh: ( opts ) ->
             @load( @id(), opts )
+            
+        destroy: ->
+            @_destroy(true)
+        
