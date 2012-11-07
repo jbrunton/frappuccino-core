@@ -55,8 +55,8 @@ def generate_codo_docs
     
 end
 
-def build_assets( source_file_name, output_file_name )
-    puts "Compiling #{source_file_name}..."
+def build_assets( asset_name )
+    puts "Compiling #{asset_name}..."
 
     root    = Pathname(File.dirname(__FILE__))
     logger  = Logger.new(STDOUT)
@@ -68,8 +68,8 @@ def build_assets( source_file_name, output_file_name )
     assets_path = root.join('lib', 'assets', 'javascripts').to_s
     sprockets.append_path(assets_path)
 
-    assets = sprockets.find_asset(source_file_name)
-    assets.write_to(root.join('build', output_file_name))
+    assets = sprockets.find_asset(asset_name)
+    assets.write_to(root.join('build', asset_name))
 end
 
 task :codo do
@@ -80,10 +80,10 @@ end
 # http://www.simonecarletti.com/blog/2011/09/using-sprockets-without-a-railsrack-project/
 
 task :build_container do
-    build_assets 'container.js', 'frappuccino-container.js'
+    build_assets 'frappuccino-container.js'
 end
 
 task :build do
-    build_assets 'framework.js', 'frappuccino-core.js'
+    build_assets 'frappuccino-core.js'
 end
 
