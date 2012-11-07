@@ -1,4 +1,12 @@
-require "bundler/gem_tasks"
+require 'rubygems'
+require 'bundler'
+require 'pathname'
+require 'logger'
+require 'fileutils'
+require 'tmpdir'
+require 'sprockets'
+
+Bundler.require
 
 def generate_codo_docs
     #if `git status -s`
@@ -47,6 +55,35 @@ def generate_codo_docs
     
 end
 
+def build_assets( source_file_name, output_file_name )
+    puts "Compiling #{source_file_name}..."
+
+    root    = Pathname(File.dirname(__FILE__))
+    logger  = Logger.new(STDOUT)
+
+    sprockets = Sprockets::Environment.new(root) do |env|
+        env.logger = logger
+    end
+
+    assets_path = root.join('lib', 'assets', 'javascripts').to_s
+    sprockets.append_path(assets_path)
+
+    assets = sprockets.find_asset(source_file_name)
+    assets.write_to(root.join('build', output_file_name))
+end
+
 task :codo do
     generate_codo_docs
 end
+
+# With thanks to Simone Carletti:
+# http://www.simonecarletti.com/blog/2011/09/using-sprockets-without-a-railsrack-project/
+
+task :build_container do
+    build_assets 'container.js', 'frappuccino-container.js'
+end
+
+task :build do
+    build_assets 'framework.js', 'frappuccino-core.js'
+end
+

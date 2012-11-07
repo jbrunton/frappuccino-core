@@ -105,6 +105,7 @@ DEPENDENCIES
   jasminerice
   jquery-rails
   railties (~> 3.2)
+  sprockets
   thin
   tzinfo
   underscore-rails

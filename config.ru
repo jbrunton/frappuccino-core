@@ -4,6 +4,8 @@ require 'jasminerice'
 require 'jasmine-stories'
 require 'sprockets/railtie'
 require 'jquery-rails'
+require 'underscore-rails'
+
 
 class JasmineTest < Rails::Application
   routes.append do

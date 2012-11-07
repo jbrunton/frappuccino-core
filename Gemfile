@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 group :assets do
   gem 'coffee-script'
+  gem 'underscore-rails'
+  gem 'jquery-rails'
+  gem 'sprockets'
 end
 
 group :development, :test do
@@ -12,8 +15,6 @@ group :development, :test do
   gem 'thin'
 
   gem 'jasminerice'
-  gem 'jquery-rails'
-  gem 'underscore-rails'
   gem 'guard-jasmine'
   gem 'jasmine-stories'
 end
