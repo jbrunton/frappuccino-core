@@ -13,7 +13,7 @@ def generate_codo_docs
         puts "Created tmpdir at: #{tmpdir_path}"
 
         puts "Invoking codo..."
-        puts `codo #{original_dir}`
+        puts `codo #{original_dir}/lib/assets/javascripts/core`
         
         puts "Contents of docs/ is:"
         puts `ls -l #{original_dir}/docs`
