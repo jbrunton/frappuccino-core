@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Frappuccino Documentation</title>
+  <link rel='stylesheet' href='../../../assets/codo.css' type='text/css'>
+  <script src='../../../assets/codo.js'></script>
+  <script src='../../../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>core</span>
+    &raquo;
+    <span class='title'>resources</span>
+    &raquo;
+    <span class='title'>HttpRepository</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../../../class_list.html'>Classes</a>
+      <a id='mixin_list_link' href='../../../mixin_list.html'>Mixins</a>
+      <a id='method_list_link' href='../../../method_list.html'>Methods</a>
+      <a id='file_list_link' href='../../../file_list.html'>Files</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        core.resources.HttpRepository
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>lib/assets/javascripts/core/resources/http_repository.js.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Repository for making async HTTP requests to a RESTful API. </p> 
+</div>
+<div class='tags'>
+</div>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#resource_url-instance'>
+        - (String) <strong>resource_url</strong>(collection_name, id, includes, action)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates the URL to access a RESTful collection or resource.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#gen_req_params-instance'>
+        - (String) <strong>gen_req_params</strong>(associations)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates query params to follow the given associations on the server and include them in the response.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_collection-instance'>
+        - (void) <strong>get_collection</strong>(collection_name, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a GET request to read from the given collection.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get_resource-instance'>
+        - (void) <strong>get_resource</strong>(collection_name, id, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a GET request to read from the specified resource.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#create_resource-instance'>
+        - (void) <strong>create_resource</strong>(collection_name, data, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a POST request to create a new instance of a resource.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update_resource-instance'>
+        - (void) <strong>update_resource</strong>(collection_name, id, data, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Generates a PUT request to update a specified resource.
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='resource_url-instance'>
+      - (String) <strong>resource_url</strong>(collection_name, id, includes, action)
+    </p>
+    <div class='docstring'>
+  <p>Generates the URL to access a RESTful collection or resource. </p> 
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      a collection of all users:
+    </h4>
+    <pre><code class='coffee'>repository.resource_url( &quot;users&quot; ) # &quot;/api/users/&quot;</code></pre>
+    <h4>
+      URL for a specific user:
+    </h4>
+    <pre><code class='coffee'>repository.resource_url( &quot;users&quot;, 1 ) # &quot;/api/users/1&quot;</code></pre>
+    <h4>
+      URL with a specific action:
+    </h4>
+    <pre><code class='coffee'>repository.resource_url( &quot;users&quot;, 1, null, &quot;edit&quot; ) # &quot;/api/users/1/edit&quot;</code></pre>
+    <h4>
+      follows the recent_posts association (note: dependent on the implementation of gen_req_params):
+    </h4>
+    <pre><code class='coffee'>repository.resource_url( &quot;users&quot;, 1, { recent_posts: true } ) # &quot;/api/users/1?include=recent_posts&quot;</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>collection_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the collection.</span>
+    </li>
+    <li>
+      <span class='name'>id</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>(optional) the id of the resource.</span>
+    </li>
+    <li>
+      <span class='name'>includes</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>(optional) the associations to follow and include in the response.</span>
+    </li>
+    <li>
+      <span class='name'>action</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>(optional) the action to append to the collection URL.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the full URL.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='gen_req_params-instance'>
+      - (String) <strong>gen_req_params</strong>(associations)
+    </p>
+    <div class='docstring'>
+  <p>Generates query params to follow the given associations on the server and include them in the response. </p> 
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>repository.gen_req_params( user, blogs: { blog_posts: true } ) # &quot;include=user,blogs.blog_posts&quot;</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>associations</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>a tree representing the associations.</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the query param.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_collection-instance'>
+      - (void) <strong>get_collection</strong>(collection_name, opts)
+    </p>
+    <div class='docstring'>
+  <p>Generates a GET request to read from the given collection. </p> <p>@option opts include [String] the associations to include in the response. @option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. @option opts action [String] the action to append to the generated base URL. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>collection_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the collection to read.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get_resource-instance'>
+      - (void) <strong>get_resource</strong>(collection_name, id, opts)
+    </p>
+    <div class='docstring'>
+  <p>Generates a GET request to read from the specified resource. </p> <p>@option opts include [String] the associations to include in the response. @option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. @option opts action [String] the action to append to the generated base URL. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>collection_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the collection the resource belongs to.</span>
+    </li>
+    <li>
+      <span class='name'>id</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the id of the resource to read.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='create_resource-instance'>
+      - (void) <strong>create_resource</strong>(collection_name, data, opts)
+    </p>
+    <div class='docstring'>
+  <p>Generates a POST request to create a new instance of a resource. </p> <p>@option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>collection_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the collection the resource belongs to.</span>
+    </li>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>JSON representation of the resource.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update_resource-instance'>
+      - (void) <strong>update_resource</strong>(collection_name, id, data, opts)
+    </p>
+    <div class='docstring'>
+  <p>Generates a PUT request to update a specified resource. </p> <p>@option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>collection_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the collection the resource belongs to.</span>
+    </li>
+    <li>
+      <span class='name'>id</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the id of the resource to read.</span>
+    </li>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>JSON representation of the resource.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Nov 07 2012 21:29:37 GMT+0000 (GMT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.2.3
+  (Node.js v0.8.8).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>
