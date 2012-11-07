@@ -1,9 +1,9 @@
-@namespace "core.types", ->
+@namespace "core.types"
 
-    class @SimpleType
-    
-        constructor: (@tyName, @serialize, @deserialize) ->
-            @kind = "simple"
-            @serialize = ((x) -> x) unless @serialize
-            @deserialize = ((x) -> x) unless @deserialize
+class core.types.SimpleType
+
+    constructor: (@tyName, @serialize, @deserialize) ->
+        @kind = "simple"
+        @serialize = ((x) -> x) unless @serialize
+        @deserialize = ((x) -> x) unless @deserialize
             

@@ -1,103 +1,103 @@
-@namespace "core.types", ->
+namespace "core.types"
 
-    class @ComplexType
+class core.types.ComplexType
+
+    constructor: (@tyName, @tyDef, @propertyFactory) ->
+        @kind = "complex"
+        
+    deserializePermissions: (data, target) ->
+        target.permissions ?= {}
+        for permission_name, has_permission of data
+            if target.permissions[permission_name]?
+                target.permissions[permission_name](has_permission) 
+            else
+                target.permissions[permission_name] = @propertyFactory.createProperty( has_permission )
     
-        constructor: (@tyName, @tyDef, @propertyFactory) ->
-            @kind = "complex"
-            
-        deserializePermissions: (data, target) ->
-            target.permissions ?= {}
-            for permission_name, has_permission of data
-                if target.permissions[permission_name]?
-                    target.permissions[permission_name](has_permission) 
-                else
-                    target.permissions[permission_name] = @propertyFactory.createProperty( has_permission )
+    serialize: (obj, env, includeSpec, nested) ->
+    
+        data = {}
+        tyDef = @tyDef
         
-        serialize: (obj, env, includeSpec, nested) ->
-        
-            data = {}
-            tyDef = @tyDef
+        serializeField = (propName, propDef) ->
+            propTyName = propDef.class_name
+            propTy = env.getType propTyName
+            propKind = propTy.kind # TODO: don't need this var
+            if propDef.primary_key && nested
+                include = true
+            else if includeSpec?
+                include = includeSpec[propName]?
+            else
+                include = propDef.serialize?
             
-            serializeField = (propName, propDef) ->
-                propTyName = propDef.class_name
-                propTy = env.getType propTyName
-                propKind = propTy.kind # TODO: don't need this var
-                if propDef.primary_key && nested
-                    include = true
-                else if includeSpec?
-                    include = includeSpec[propName]?
-                else
-                    include = propDef.serialize?
+            if include
+                prop = obj[propName]
+                propVal = prop() unless not prop
                 
-                if include
-                    prop = obj[propName]
-                    propVal = prop() unless not prop
-                    
-                    if includeSpec?
-                        propIncludeSpec = ( includeSpec[propName] || {} )
+                if includeSpec?
+                    propIncludeSpec = ( includeSpec[propName] || {} )
 
-                    if propDef.association
-                        propName = "#{propName}_attributes"                        
-                    
-                    data[propName] = propTy.serialize propVal, env, propIncludeSpec, true
-            
-            for propName, propTyName of tyDef.attributes
-                serializeField propName, propTyName
+                if propDef.association
+                    propName = "#{propName}_attributes"                        
                 
-            if obj._destroy and obj._destroy()
-                data._destroy = 1
-            
-            data
-            
-        initialize: (target, env, includeSpec) ->
+                data[propName] = propTy.serialize propVal, env, propIncludeSpec, true
         
-            tyDef = @tyDef
-            includeSpec ?= {}
+        for propName, propTyName of tyDef.attributes
+            serializeField propName, propTyName
+            
+        if obj._destroy and obj._destroy()
+            data._destroy = 1
         
-            initializeField = (propName, propDef) ->
-                propTyName = propDef.class_name
-                propTy = env.getType propTyName
-                propKind = propTy.kind # TODO: don't need this var
-                if includeSpec[propName]?
-                    if propKind == "list"
-                        target[propName]([])
-                    else if propDef.association
-                        propVal = env.create(propTyName)
-                        target[propName](propVal)
-                        propTy.initialize(target[propName](), env, includeSpec[propName])
-                
-            for propName, propTyName of tyDef.attributes
-                initializeField propName, propTyName 
-                
-            target
-            
-        deserialize: (data, env, target) ->
+        data
         
-            target = target ?= env.create(@tyName)
-            tyDef = @tyDef
-            self = @
+    initialize: (target, env, includeSpec) ->
+    
+        tyDef = @tyDef
+        includeSpec ?= {}
+    
+        initializeField = (propName, propDef) ->
+            propTyName = propDef.class_name
+            propTy = env.getType propTyName
+            propKind = propTy.kind # TODO: don't need this var
+            if includeSpec[propName]?
+                if propKind == "list"
+                    target[propName]([])
+                else if propDef.association
+                    propVal = env.create(propTyName)
+                    target[propName](propVal)
+                    propTy.initialize(target[propName](), env, includeSpec[propName])
             
-            if !data?
-                return target
+        for propName, propTyName of tyDef.attributes
+            initializeField propName, propTyName 
             
-            deserializeField = (propName, propDef) ->
-                propTyName = propDef.class_name
-                propTy = env.getType propTyName
-                propKind = propTy.kind # TODO: don't need this var
-                propVal = propTy.deserialize data[propName], env
-                if target[propName]?
-                    target[propName]( propVal )
+        target
+        
+    deserialize: (data, env, target) ->
+    
+        target = target ?= env.create(@tyName)
+        tyDef = @tyDef
+        self = @
+        
+        if !data?
+            return target
+        
+        deserializeField = (propName, propDef) ->
+            propTyName = propDef.class_name
+            propTy = env.getType propTyName
+            propKind = propTy.kind # TODO: don't need this var
+            propVal = propTy.deserialize data[propName], env
+            if target[propName]?
+                target[propName]( propVal )
+            else
+                if propKind == "list"
+                    prop = self.propertyFactory.createArrayProperty propVal
                 else
-                    if propKind == "list"
-                        prop = self.propertyFactory.createArrayProperty propVal
-                    else
-                        prop = self.propertyFactory.createProperty propVal
-                
-                    target[propName] = prop
+                    prop = self.propertyFactory.createProperty propVal
             
-            for propName, propTyName of tyDef.attributes
-                deserializeField propName, propTyName 
-            
-            @deserializePermissions(data.permissions || { read: false, write: false }, target)
-            
-            target
+                target[propName] = prop
+        
+        for propName, propTyName of tyDef.attributes
+            deserializeField propName, propTyName 
+        
+        @deserializePermissions(data.permissions || { read: false, write: false }, target)
+        
+        target

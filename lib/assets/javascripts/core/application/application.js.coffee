@@ -1,6 +1,6 @@
-namespace "core", ->
+namespace "core"
  
- class @Application extends core.DependentObject
+class core.Application extends core.DependentObject
     @dependency renderer: "Renderer"
     @dependency router: "Router"
     @dependency mediator: "Mediator"
