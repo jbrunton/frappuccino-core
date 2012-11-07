@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>Frappuccino Documentation</title>
+  <link rel='stylesheet' href='../../assets/codo.css' type='text/css'>
+  <script src='../../assets/codo.js'></script>
+  <script src='../../assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='../../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../../class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>core</span>
+    &raquo;
+    <span class='title'>Model</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='../../class_list.html'>Classes</a>
+      <a id='mixin_list_link' href='../../mixin_list.html'>Mixins</a>
+      <a id='method_list_link' href='../../method_list.html'>Methods</a>
+      <a id='file_list_link' href='../../file_list.html'>Files</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        core.Model
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>lib/assets/javascripts/core/resources/model.js.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../../classes/core/BaseObject.html'>core.BaseObject</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Base class from which all models should derive.  Implements validation and serialization, together with a DSL for specifying validation and serialization rules. </p> 
+</div>
+<div class='tags'>
+</div>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#attr_serialize-class'>
+        + (void) <strong>attr_serialize</strong>(attribute_names...)
+      </a>
+    </span>
+    <span class='desc'>
+      Static method to specify which attributes should be serialized.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#attr-class'>
+        + (void) <strong>attr</strong>(attribute_name, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Static method to define an attribute or association.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#has_many-class'>
+        + (void) <strong>has_many</strong>(association_name, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Builds a one-to-many association with the given name.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#belongs_to-class'>
+        + (void) <strong>belongs_to</strong>(association_name, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Builds a one-to-one association with the given name, and generates a foreign key for the association.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#has_one-class'>
+        + (void) <strong>has_one</strong>(association_name, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Builds a one-to-one association with the given name.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#load_collection-class'>
+        + (void) <strong>load_collection</strong>(env, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Reads a collection of models from the data repository and deserializes the response.
+    </span>
+  </li>
+</ul>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        - (void) <strong>constructor</strong>(data, env)
+      </a>
+    </span>
+    <span class='constructor note title'>Constructor</span>
+    <span class='desc'>
+      Instantiates an instance of the model.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#is_new_record-instance'>
+        - (void) <strong>is_new_record</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Returns true if the model has no valid id (i.e.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#serialize-instance'>
+        - (void) <strong>serialize</strong>(opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Recursively serializes the model and the specified associations, returning a JSON representation of it.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#deserialize-instance'>
+        - (void) <strong>deserialize</strong>(data)
+      </a>
+    </span>
+    <span class='desc'>
+      Recursively deserializes the model and the specified associations, returning a reference to the model.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#load-instance'>
+        - (void) <strong>load</strong>(id, opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Reads the current state of the model from the data repository and updates the model with the result.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#save-instance'>
+        - (void) <strong>save</strong>(opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Saves the model to the data repository, by either creating a new record or updating the existing one.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#refresh-instance'>
+        - (void) <strong>refresh</strong>(opts)
+      </a>
+    </span>
+    <span class='desc'>
+      Refreshes the model with recent data from the repository.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-instance'>
+        - (void) <strong>destroy</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+</ul>
+      <h2>
+        <small>Inherited Method Summary</small>
+      </h2>
+      <h3 class='inherited'>
+        Methods inherited from
+        <a href='../../classes/core/BaseObject.html'>core.BaseObject</a>
+      </h3>
+      <p class='inherited'>
+                <a href='../../classes/core/BaseObject.html#include-class'>.include</a>,
+        <a href='../../classes/core/BaseObject.html#decorate-instance'>#decorate</a>
+      </p>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='attr_serialize-class'>
+      + (void) <strong>attr_serialize</strong>(attribute_names...)
+    </p>
+    <div class='docstring'>
+  <p>Static method to specify which attributes should be serialized. </p> 
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>class User extends core.Model
+  # ...
+  @attr_serialize &quot;user_name&quot;, &quot;email&quot;</code></pre>
+  </div>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>attribute_names</span>
+      <span class='type'>
+        (<tt>Array<String></tt>)
+      </span>
+      &mdash;
+      <span class='desc'>an array of the attribute names which should be serialized.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='attr-class'>
+      + (void) <strong>attr</strong>(attribute_name, opts)
+    </p>
+    <div class='docstring'>
+  <p>Static method to define an attribute or association. </p> <p>@option opts class_name [String] the name of the class to deserialize the attribute as. @option opts primary_key [Boolean] flag to specifiy whether attribute as the primary key for the underlying resource. @option opts association [Boolean] flag to specify whether the attribute represents an association. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>attribute_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the attribute.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='has_many-class'>
+      + (void) <strong>has_many</strong>(association_name, opts)
+    </p>
+    <div class='docstring'>
+  <p>Builds a one-to-many association with the given name.  Implicitly infers the class name if none is provided. </p> <p>@option opts class_name [String] (optional) the name of the underlying class in the association. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>association_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the association.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='belongs_to-class'>
+      + (void) <strong>belongs_to</strong>(association_name, opts)
+    </p>
+    <div class='docstring'>
+  <p>Builds a one-to-one association with the given name, and generates a foreign key for the association. </p> <p>@option opts class_name [String] (optional) the name of the underlying class in the association. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>association_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the association.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='has_one-class'>
+      + (void) <strong>has_one</strong>(association_name, opts)
+    </p>
+    <div class='docstring'>
+  <p>Builds a one-to-one association with the given name. </p> <p>@option opts class_name [String] (optional) the name of the underlying class in the association. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>association_name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the association.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='load_collection-class'>
+      + (void) <strong>load_collection</strong>(env, opts)
+    </p>
+    <div class='docstring'>
+  <p>Reads a collection of models from the data repository and deserializes the response. </p> <p>@option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>env</span>
+      <span class='type'>
+        (<tt>core.Environment</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the environment to use for deserialization.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      - (void) <strong>constructor</strong>(data, env)
+    </p>
+    <div class='docstring'>
+  <p>Instantiates an instance of the model.  Constructs all attributes which aren&#39;t associations. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>data</span>
+      <span class='type'>
+        (<tt>Object</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>(optional) JSON representation of the initial state of the model.</span>
+    </li>
+    <li>
+      <span class='name'>env</span>
+      <span class='type'>
+        (<tt>core.Environment</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>(optional) the environment to use for serialization.  Defaults to core.Model.default_env.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='is_new_record-instance'>
+      - (void) <strong>is_new_record</strong>()
+    </p>
+    <div class='docstring'>
+  <p>Returns true if the model has no valid id (i.e. doesn&#39;t yet exist in the data repository). </p> 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='serialize-instance'>
+      - (void) <strong>serialize</strong>(opts)
+    </p>
+    <div class='docstring'>
+  <p>Recursively serializes the model and the specified associations, returning a JSON representation of it. </p> 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='deserialize-instance'>
+      - (void) <strong>deserialize</strong>(data)
+    </p>
+    <div class='docstring'>
+  <p>Recursively deserializes the model and the specified associations, returning a reference to the model. </p> 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='load-instance'>
+      - (void) <strong>load</strong>(id, opts)
+    </p>
+    <div class='docstring'>
+  <p>Reads the current state of the model from the data repository and updates the model with the result. </p> <p>@option opts include [String] the associations to include in the response. @option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>id</span>
+      <span class='type'>
+        (<tt>Number</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the id of the resource to read.</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='save-instance'>
+      - (void) <strong>save</strong>(opts)
+    </p>
+    <div class='docstring'>
+  <p>Saves the model to the data repository, by either creating a new record or updating the existing one. </p> <p>@option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='refresh-instance'>
+      - (void) <strong>refresh</strong>(opts)
+    </p>
+    <div class='docstring'>
+  <p>Refreshes the model with recent data from the repository. </p> <p>@option opts success [Function] the handler to call on a successful response. @option opts error [Function] the handler to call in case of an error. </p> 
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-instance'>
+      - (void) <strong>destroy</strong>()
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Wed Nov 07 2012 21:17:15 GMT+0000 (GMT)
+  by
+  <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
+  v1.2.3
+  (Node.js v0.8.8).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/#!/netzpirat'>@netzpirat</a>
+  &#10034;
+  <a href='https://mksoft.ch'>mksoft.ch</a>
+</div>
+  </body>
+</html>

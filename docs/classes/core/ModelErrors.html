@@ -15,7 +15,7 @@
     &raquo;
     <span class='title'>core</span>
     &raquo;
-    <span class='title'>Mediator</span>
+    <span class='title'>ModelErrors</span>
     <nav>
       <ul>
         <li class='noframes'>
@@ -102,20 +102,14 @@
     <div id='content'>
       <h1>
         Class:
-        core.Mediator
+        core.ModelErrors
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>lib/assets/javascripts/core/events/mediator.js.coffee</td>
+          <td>lib/assets/javascripts/core/resources/model_errors.js.coffee</td>
         </tr>
       </table>
-      <h2>Overview</h2>
-      <div class='docstring'>
-  <p>An implementation of the mediator pattern.  This class should not be referred to directly, as the AER pattern is preferred. </p> 
-</div>
-<div class='tags'>
-</div>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
@@ -131,22 +125,32 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#subscribe-instance'>
-        - (void) <strong>subscribe</strong>(event, handler, context)
+      <a href='#add-instance'>
+        - (void) <strong>add</strong>(attribute, message)
       </a>
     </span>
     <span class='desc'>
-      Subscribes the given handler to the content for the specified event.
+      
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#publish-instance'>
-        - (void) <strong>publish</strong>(event, args...)
+      <a href='#clear-instance'>
+        - (void) <strong>clear</strong>()
       </a>
     </span>
     <span class='desc'>
-      Invokes all handlers for the specified event.
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#is_valid-instance'>
+        - (void) <strong>is_valid</strong>(attribute)
+      </a>
+    </span>
+    <span class='desc'>
+      
     </span>
   </li>
 </ul>
@@ -163,23 +167,24 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='subscribe-instance'>
-      - (void) <strong>subscribe</strong>(event, handler, context)
+    <p class='signature' id='add-instance'>
+      - (void) <strong>add</strong>(attribute, message)
     </p>
-    <div class='docstring'>
-  <p>Subscribes the given handler to the content for the specified event. </p> 
-</div>
-<div class='tags'>
+    <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='publish-instance'>
-      - (void) <strong>publish</strong>(event, args...)
+    <p class='signature' id='clear-instance'>
+      - (void) <strong>clear</strong>()
     </p>
-    <div class='docstring'>
-  <p>Invokes all handlers for the specified event. </p> 
+    <div class='tags'>
 </div>
-<div class='tags'>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='is_valid-instance'>
+      - (void) <strong>is_valid</strong>(attribute)
+    </p>
+    <div class='tags'>
 </div>
   </div>
 </div>

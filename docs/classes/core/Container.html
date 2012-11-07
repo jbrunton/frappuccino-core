@@ -151,6 +151,16 @@
   </li>
   <li>
     <span class='signature'>
+      <a href='#register_factory-instance'>
+        - (Container) <strong>register_factory</strong>(name, fn)
+      </a>
+    </span>
+    <span class='desc'>
+      Registers a factory function for resolving dependencies
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#_resolve_object-instance'>
         - (void) <strong>_resolve_object</strong>(target)
       </a>
@@ -162,7 +172,7 @@
   <li>
     <span class='signature'>
       <a href='#resolve-instance'>
-        - (void) <strong>resolve</strong>(args...)
+        - (void) <strong>resolve</strong>(ref, opts)
       </a>
     </span>
     <span class='desc'>
@@ -299,6 +309,45 @@
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='register_factory-instance'>
+      - (Container) <strong>register_factory</strong>(name, fn)
+    </p>
+    <div class='docstring'>
+  <p>Registers a factory function for resolving dependencies </p> 
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (<tt>String</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the name of the mapping</span>
+    </li>
+    <li>
+      <span class='name'>fn</span>
+      <span class='type'>
+        (<tt>Function</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the factory function to resolve the mapping</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'>
+        (<tt>Container</tt>)
+      </span>
+      &mdash;
+      <span class='desc'>the container</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='_resolve_object-instance'>
       - (void) <strong>_resolve_object</strong>(target)
     </p>
@@ -323,7 +372,7 @@
     <p class='signature' id='resolve-instance'>
       - (Object) <strong>resolve</strong>(name) Resolves the dependency according to the name of the mapping.
       <br>
-      - (Container) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
+      - (Object) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
       <br>
     </p>
     <div class='docstring'>
@@ -362,7 +411,7 @@
     </div>
     <div class='overload'>
       <p class='signature'>
-        - (Container) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
+        - (Object) <strong>resolve</strong>(target, opts) Resolves any unresolved dependencies on a given object.
       </p>
       <div class='tags'>
   <h3>Parameters:</h3>
@@ -380,7 +429,7 @@
   <ul class='return'>
     <li>
       <span class='type'>
-        (<tt>Container</tt>)
+        (<tt>Object</tt>)
       </span>
       &mdash;
       <span class='desc'>target.</span>
@@ -415,7 +464,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Mon Sep 03 2012 14:37:28 GMT+0100 (BST)
+  Wed Nov 07 2012 21:17:15 GMT+0000 (GMT)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.2.3
