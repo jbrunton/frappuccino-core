@@ -18,5 +18,5 @@ namespace = (scope) ->
   
 _global.namespace = namespace
 
-_global._ = require('underscore')
-
+if require? and exports?
+    _global._ = require('underscore')
