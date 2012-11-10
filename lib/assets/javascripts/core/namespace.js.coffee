@@ -1,4 +1,6 @@
-window.namespace = (scope, fn)->
+_global = if window? then window else global
+
+namespace = (scope) ->
 
   add_namespace = (scope, ctx) ->
     [outer, rest...] = scope
@@ -8,9 +10,13 @@ window.namespace = (scope, fn)->
     
     if rest.length
       add_namespace rest, ctx[outer]
-    else
-      if not ctx[outer].namespace?
-        ctx[outer].namespace = window.namespace
-      fn.apply(ctx[outer], []) unless not fn?
+      
+    if ctx == _global and exports?
+      exports[outer] = ctx[outer]
 
-  add_namespace scope.split("."), this
+  add_namespace scope.split("."), _global
+  
+_global.namespace = namespace
+
+_global._ = require('underscore')
+

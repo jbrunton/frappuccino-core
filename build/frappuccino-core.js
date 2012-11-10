@@ -479,9 +479,12 @@
 
 }(this || window));
 (function() {
-  var __slice = [].slice;
+  var target,
+    __slice = [].slice;
 
-  window.namespace = function(scope, fn) {
+  target = typeof exports !== "undefined" && exports !== null ? exports : window;
+
+  target.namespace = function(scope) {
     var add_namespace;
     add_namespace = function(scope, ctx) {
       var outer, rest;
@@ -493,10 +496,7 @@
         return add_namespace(rest, ctx[outer]);
       } else {
         if (!(ctx[outer].namespace != null)) {
-          ctx[outer].namespace = window.namespace;
-        }
-        if (!!(fn != null)) {
-          return fn.apply(ctx[outer], []);
+          return ctx[outer].namespace = namespace;
         }
       }
     };
