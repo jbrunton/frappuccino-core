@@ -4,7 +4,7 @@ class core.validators.EmailValidator extends core.validators.BaseValidator
 
     constructor: ( attribute, opts ) ->
         super( attribute, opts )
-        @message = opts?.message
+        @initialize_attributes(opts , "message")
         @message ?= "please provide a valid email address"
                 
     validate: ( model ) ->

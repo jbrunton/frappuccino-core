@@ -5,7 +5,7 @@ class core.validators.ConfirmationValidator extends core.validators.BaseValidato
     constructor: ( attribute, opts ) ->
         super( attribute, opts )
         @confirmation_attribute = "#{@attribute}_confirmation"
-        @message = opts?.message
+        @initialize_attributes(opts , "message")
         @message ?= "values do not match"
         
     initialize_model: ( model ) ->

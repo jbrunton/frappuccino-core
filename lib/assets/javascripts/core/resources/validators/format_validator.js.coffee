@@ -5,7 +5,7 @@ class core.validators.FormatValidator extends core.validators.BaseValidator
     constructor: ( attribute, opts ) ->
         super( attribute, opts )
         @format = opts.with
-        @message = opts?.message
+        @initialize_attributes(opts , "message")
         @message ?= "input must be in the specified format"
                 
     validate: ( model ) ->

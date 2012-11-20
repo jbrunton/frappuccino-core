@@ -7,6 +7,10 @@ class core.validators.BaseValidator
         @unless = opts?.unless
 
     initialize_model: ( model ) ->
+
+    initialize_attributes: ( opts , args... ) ->
+        if opts?
+            _.extend( this , _.pick.apply( this, [opts, args] ) )
     
     attribute_value: ( model, attribute_name ) ->
         attribute_name ?= @attribute

@@ -4,7 +4,7 @@ class core.validators.PresenceValidator extends core.validators.BaseValidator
 
     constructor: ( attribute, opts ) ->
         super( attribute, opts )
-        @message = opts?.message
+        @initialize_attributes(opts , "message")
         @message ?= @default_message()
                 
     default_message: ->
