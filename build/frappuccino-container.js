@@ -1,7 +1,10 @@
 (function() {
-  var __slice = [].slice;
+  var namespace, _global,
+    __slice = [].slice;
 
-  window.namespace = function(scope, fn) {
+  _global = typeof window !== "undefined" && window !== null ? window : global;
+
+  namespace = function(scope) {
     var add_namespace;
     add_namespace = function(scope, ctx) {
       var outer, rest;
@@ -10,18 +13,18 @@
         ctx[outer] = {};
       }
       if (rest.length) {
-        return add_namespace(rest, ctx[outer]);
-      } else {
-        if (!(ctx[outer].namespace != null)) {
-          ctx[outer].namespace = window.namespace;
-        }
-        if (!!(fn != null)) {
-          return fn.apply(ctx[outer], []);
-        }
+        add_namespace(rest, ctx[outer]);
+      }
+      if (ctx === _global && (typeof exports !== "undefined" && exports !== null)) {
+        return exports[outer] = ctx[outer];
       }
     };
-    return add_namespace(scope.split("."), this);
+    return add_namespace(scope.split("."), _global);
   };
+
+  _global.namespace = namespace;
+
+  _global._ = require('underscore');
 
 }).call(this);
 (function() {
