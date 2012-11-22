@@ -79,9 +79,9 @@ class core.Application extends core.DependentObject
         
         route_mapper = new core.routes.Mapper
         container.resolve( route_mapper )
-        route_mapper.draw( config.routes )
+        route_mapper.draw( config?.routes || -> )
         
-        @router.initialize()
+        @router?.initialize?()
         
         @mediator.publish "Application.initialize"
         @mediator.publish "Application.ready"
