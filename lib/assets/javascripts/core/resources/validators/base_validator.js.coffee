@@ -9,7 +9,7 @@ class core.validators.BaseValidator
     initialize_model: ( model ) ->
 
     initialize_attributes: ( opts , args... ) ->
-        if opts?
+        if opts? and _.isObject(opts)
             _.extend( this , _.pick.apply( this, [opts, args] ) )
     
     attribute_value: ( model, attribute_name ) ->
