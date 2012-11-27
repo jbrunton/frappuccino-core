@@ -1,10 +1,10 @@
 namespace "core.routes"
 
-Backbone = {} unless Backbone?
+BackboneRouter = Backbone?.Router || {}
 
-class core.routes.BackboneRouter extends Backbone
+class core.routes.BackboneRouter extends BackboneRouter
 
-    constructor: ( @app ) ->
+    core.DependentModule.dependency.call @, app: "Application"
 
     route: ( url, controller_name, action_name ) ->
         dispatcher = new core.routes.Dispatcher( @app, controller_name, action_name )
@@ -13,12 +13,7 @@ class core.routes.BackboneRouter extends Backbone
     navigate_handler: ( event ) =>
         event.preventDefault()
         href = $(event.currentTarget).attr( "href" )
-        @navigate( href )    
+        @navigate( href, true )    
 
     initialize: ->
-            self = @
-            $(document).on "click", ".nav-to",
-                (event) ->
-                    event.preventDefault()
-                    href = $(event.currentTarget).attr( "href" )
-                    self.navigate( href )
+        $(document).on "click", ".nav-to", @navigate_handler

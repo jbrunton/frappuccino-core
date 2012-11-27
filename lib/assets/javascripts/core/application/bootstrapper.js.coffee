@@ -42,7 +42,7 @@ class core.Bootstrapper
         for klass_name, klass of app_controllers when matches = controller_regex.exec( klass_name )
             controller_name = _.string.underscored( matches[0] )
             controller = container.resolve( new klass( controller_name ) )
-            @application.register_controller( controller )
+            @application.register_module( controller )
     
     register_helpers: (container) ->
     

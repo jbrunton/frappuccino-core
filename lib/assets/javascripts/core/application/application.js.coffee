@@ -41,15 +41,6 @@ class core.Application extends core.DependentObject
     register_module: (module) ->
         @modules[module.name] = module
         module.sandbox.bind_subscriptions module
-        
-    register_controller: (controller) ->
-        @register_module controller
-        
-        for url, route_name of controller.routes
-            @register_route url, route_name, controller
-            
-        for name, content of controller.templates
-            @renderer.register_template name, content
             
     register_helper: ( name, helper ) ->
         # TODO: would be better to lookup a sandbox here - but need to be able to have distinct,
@@ -85,6 +76,12 @@ class core.Application extends core.DependentObject
         bootstrapper.register_modules( container )   
         bootstrapper.register_helpers( container )
         bootstrapper.register_models()
+        
+        route_mapper = new core.routes.Mapper
+        container.resolve( route_mapper )
+        route_mapper.draw( config?.routes || -> )
+        
+        @router?.initialize?()
         
         @mediator.publish "Application.initialize"
         @mediator.publish "Application.ready"

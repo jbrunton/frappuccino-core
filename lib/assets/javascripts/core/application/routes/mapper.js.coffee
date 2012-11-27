@@ -34,7 +34,13 @@ class core.routes.Mapper extends core.DependentObject
         
     resource: ( resource ) ->
         for action in ['view', 'edit']
+            path_name = opt?.paths_names?[action]?
+            path_name ?= action
             @router.route "#{resource}/:id/#{action}", resource, action
+        for action in ['create']
+            path_name = opt?.paths_names?[action]?
+            path_name ?= action
+            @router.route "#{resource}/#{action}", resource, action
         
     #namespace: ( path, block ) ->
     #    @scope.push path
