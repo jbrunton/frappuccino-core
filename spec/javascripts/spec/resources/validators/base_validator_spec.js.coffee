@@ -19,7 +19,7 @@ describe "core.validators.BaseValidator", ->
         validator.initialize_attributes opts , "message", "param_1"
         expect(validator.param_2).not.toBeDefined()
 
-    it "should not throw an exception initialising attributes if opts is not an object" , ->
+    it "should not throw an exception initialising attributes when opts is not an object" , ->
         foo = ->
             validator.initialize_attributes true , "message"
         expect(foo).not.toThrow()
