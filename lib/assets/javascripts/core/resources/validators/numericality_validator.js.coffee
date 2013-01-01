@@ -42,24 +42,24 @@ class core.validators.NumericalityValidator extends core.validators.BaseValidato
         @message ?= @default_message()
     
     default_message: ->
-        temp_message = "Please enter a valid value. Value should be:"
+        message = "Please enter a valid value. Value should be:"
         if (@only_integer==true)
-            temp_message += "\nAn integer"
+            message += "\nAn integer"
         if (@greater_than?)
-            temp_message += "\nGreater than #{@greater_than}"
+            message += "\nGreater than #{@greater_than}"
         if (@greater_than_or_equal_to?)
-            temp_message += "\nGreater than or equal to #{@greater_than_or_equal_to}"
+            message += "\nGreater than or equal to #{@greater_than_or_equal_to}"
         if (@equal_to?)
-            temp_message += "\nEqual to #{@equal_to}"
+            message += "\nEqual to #{@equal_to}"
         if (@less_than?)
-            temp_message += "\nLess than #{@less_than}"
+            message += "\nLess than #{@less_than}"
         if (@less_than_or_equal_to?)
-            temp_message += "\nLess than or equal to #{@less_than_or_equal_to}"
+            message += "\nLess than or equal to #{@less_than_or_equal_to}"
         if (@odd==true)
-            temp_message += "\nOdd"
+            message += "\nOdd"
         if (@even==true)
-            temp_message += "\nEven"
-        temp_message
+            message += "\nEven"
+        message
                 
     validate: ( model ) ->
         input = @attribute_value( model )
