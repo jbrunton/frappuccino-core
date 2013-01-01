@@ -4,9 +4,7 @@ class core.validators.LengthValidator extends core.validators.BaseValidator
 
     constructor: ( attribute, opts ) ->
         super( attribute, opts )
-        @min = opts.min
-        @max = opts.max
-        @message = opts?.message
+        @initialize_attributes(opts , "min", "max", "message")
         @message ?= @default_message()
                 
     default_message: ->
